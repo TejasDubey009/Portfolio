@@ -72,7 +72,6 @@ export const Hero3DCanvas = () => {
         ctx.fillStyle = line.color;
         ctx.fillText(textToDraw, 55, 86 + idx * 36);
 
-        // Render Blinking Cursor at current typing position
         if (textToDraw.length < line.text.length || idx === lines.length - 1) {
           if (showCursor && totalTyped + textToDraw.length >= charCount - 1) {
             const textWidth = ctx.measureText(textToDraw).width;
@@ -133,7 +132,7 @@ export const Hero3DCanvas = () => {
 
     // Camera
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 0, 7);
+    camera.position.set(0, 0, 6.8);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -153,7 +152,7 @@ export const Hero3DCanvas = () => {
     const terminalGroup = new THREE.Group();
     scene.add(terminalGroup);
 
-    // 1. Static 3D Code Terminal Panel (Facing user)
+    // 1. Static 3D Code Terminal Screen (Width = 2.6, Height = 1.6)
     const terminalGeo = new THREE.PlaneGeometry(2.6, 1.6);
     const terminalTex = createTerminalTexture();
     const terminalMat = new THREE.MeshBasicMaterial({
@@ -162,31 +161,39 @@ export const Hero3DCanvas = () => {
       side: THREE.DoubleSide
     });
     const terminalMesh = new THREE.Mesh(terminalGeo, terminalMat);
-    terminalMesh.position.set(0, 0.2, 0.5);
+    terminalMesh.position.set(0, 0.28, 0.42);
     terminalGroup.add(terminalMesh);
 
-    // Terminal 3D Back Frame (Glass border)
-    const frameGeo = new THREE.BoxGeometry(2.7, 1.7, 0.1);
+    // Terminal 3D Back Bezel Frame (Matching width 2.66)
+    const frameGeo = new THREE.BoxGeometry(2.66, 1.66, 0.08);
     const frameMat = new THREE.MeshPhysicalMaterial({
       color: 0x1e1b4b,
       metalness: 0.85,
       roughness: 0.2,
       clearcoat: 1.0,
       transparent: true,
-      opacity: 0.88
+      opacity: 0.9
     });
     const frameMesh = new THREE.Mesh(frameGeo, frameMat);
-    frameMesh.position.set(0, 0.2, 0.42);
+    frameMesh.position.set(0, 0.28, 0.37);
     terminalGroup.add(frameMesh);
 
-    // 2. 3D Mechanical Developer Keyboard (With Keywave animation)
+    // Hinge Cylinder connecting Monitor to Keyboard Base
+    const hingeGeo = new THREE.CylinderGeometry(0.04, 0.04, 2.5, 16);
+    const hingeMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.9, roughness: 0.2 });
+    const hingeMesh = new THREE.Mesh(hingeGeo, hingeMat);
+    hingeMesh.rotation.z = Math.PI / 2;
+    hingeMesh.position.set(0, -0.54, 0.42);
+    terminalGroup.add(hingeMesh);
+
+    // 2. 3D Mechanical Developer Keyboard (Width = 2.66, matches monitor bezel perfectly!)
     const keyboardGroup = new THREE.Group();
-    keyboardGroup.position.set(0, -0.95, 0.55);
-    keyboardGroup.rotation.x = 0.38; // Tilted toward user for 3D perspective
+    keyboardGroup.position.set(0, -0.62, 0.72);
+    keyboardGroup.rotation.x = 0.24; // Sleek 3D tilt aligned flush under monitor hinge
     terminalGroup.add(keyboardGroup);
 
-    // Keyboard Chassis Base
-    const chassisGeo = new THREE.BoxGeometry(2.5, 0.12, 0.95);
+    // Keyboard Chassis Base (Width = 2.66)
+    const chassisGeo = new THREE.BoxGeometry(2.66, 0.08, 0.95);
     const chassisMat = new THREE.MeshPhysicalMaterial({
       color: 0x0f172a,
       metalness: 0.85,
@@ -197,18 +204,18 @@ export const Hero3DCanvas = () => {
     keyboardGroup.add(chassisMesh);
 
     // RGB Neon Light Strip Base
-    const rgbStripGeo = new THREE.BoxGeometry(2.54, 0.03, 0.99);
+    const rgbStripGeo = new THREE.BoxGeometry(2.68, 0.02, 0.97);
     const rgbStripMat = new THREE.MeshBasicMaterial({
       color: themePalettes[activeTab].accent,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.85
     });
     const rgbStripMesh = new THREE.Mesh(rgbStripGeo, rgbStripMat);
     rgbStripMesh.position.y = -0.04;
     keyboardGroup.add(rgbStripMesh);
 
-    // Keycaps Grid Layout & Keywave Tracker
-    const keyCapGeo = new THREE.BoxGeometry(0.14, 0.07, 0.14);
+    // Keycaps Grid Layout & Keywave Tracker (Symmetrically aligned)
+    const keyCapGeo = new THREE.BoxGeometry(0.13, 0.05, 0.13);
     const keyCapMeshes = [];
 
     const keyRows = [
@@ -220,8 +227,8 @@ export const Hero3DCanvas = () => {
     ];
 
     keyRows.forEach((row, rIdx) => {
-      const startX = -1.1;
-      const spacing = 0.17;
+      const startX = -1.08;
+      const spacing = 0.165;
       for (let i = 0; i < row.count; i++) {
         let keyMesh;
         const keyMat = new THREE.MeshStandardMaterial({
@@ -232,23 +239,23 @@ export const Hero3DCanvas = () => {
 
         if (rIdx === 4 && i === 4) {
           // Spacebar
-          const spaceGeo = new THREE.BoxGeometry(0.75, 0.07, 0.14);
+          const spaceGeo = new THREE.BoxGeometry(0.72, 0.05, 0.13);
           keyMesh = new THREE.Mesh(spaceGeo, keyMat);
-          keyMesh.position.set(0, 0.08, row.z);
+          keyMesh.position.set(0, 0.06, row.z);
           i += 3;
         } else {
           if ((rIdx === 0 && i === 0) || (rIdx === 3 && i === row.count - 1)) {
-            keyMat.color.setHex(themePalettes[activeTab].primary); // Esc / Enter
+            keyMat.color.setHex(themePalettes[activeTab].primary);
           } else if (i === 0 || i === row.count - 1) {
             keyMat.color.setHex(themePalettes[activeTab].accent);
           }
 
           keyMesh = new THREE.Mesh(keyCapGeo, keyMat);
-          keyMesh.position.set(startX + i * spacing, 0.08, row.z);
+          keyMesh.position.set(startX + i * spacing, 0.06, row.z);
         }
 
         keyboardGroup.add(keyMesh);
-        keyCapMeshes.push({ mesh: keyMesh, initialY: 0.08, posX: keyMesh.position.x });
+        keyCapMeshes.push({ mesh: keyMesh, initialY: 0.06, posX: keyMesh.position.x });
       }
     });
 
@@ -319,7 +326,7 @@ export const Hero3DCanvas = () => {
       });
       const nodeMesh = new THREE.Mesh(nodeGeo, nodeMat);
       nodeMesh.position.x = Math.cos(item.angle) * radius;
-      nodeMesh.position.z = Math.sin(item.angle * radius);
+      nodeMesh.position.z = Math.sin(item.angle) * radius;
       nodeMesh.position.y = Math.sin(item.angle * 2) * 0.4;
       nodeGroup.add(nodeMesh);
       nodeMeshes.push({ mesh: nodeMesh, angle: item.angle, radius, speed: 0.01 });
@@ -453,7 +460,7 @@ export const Hero3DCanvas = () => {
       keyCapMeshes.forEach((item) => {
         const keyWave = Math.sin(time * 5 - item.posX * 3);
         if (keyWave > 0.75) {
-          item.mesh.position.y = item.initialY - 0.02;
+          item.mesh.position.y = item.initialY - 0.015;
           item.mesh.material.emissive.setHex(themePalettes[activeTab].accent);
           item.mesh.material.emissiveIntensity = 0.6;
         } else {
@@ -472,7 +479,7 @@ export const Hero3DCanvas = () => {
       masterGroup.rotation.x = Math.sin(time * 0.2) * 0.1 + targetRotationX;
 
       // Static Monitor floating wave animation & subtle mouse tilt (stays front-facing)
-      terminalGroup.position.y = Math.sin(time * 1.5) * 0.06;
+      terminalGroup.position.y = Math.sin(time * 1.5) * 0.05;
       terminalGroup.rotation.y = mouseX * 0.08;
       terminalGroup.rotation.x = -mouseY * 0.08;
 
@@ -528,6 +535,8 @@ export const Hero3DCanvas = () => {
       terminalMat.dispose();
       frameGeo.dispose();
       frameMat.dispose();
+      hingeGeo.dispose();
+      hingeMat.dispose();
       chassisGeo.dispose();
       chassisMat.dispose();
       rgbStripGeo.dispose();
