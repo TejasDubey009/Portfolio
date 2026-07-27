@@ -382,7 +382,7 @@ export const podcastSection = {
 export const contactInfo = {
   title: "Reach Out to Me! ☎️",
   subtitle: "DISCUSS A PROJECT OR JUST WANT TO SAY HI? MY INBOX IS OPEN FOR ALL.",
-  number: "+91-9876543210 (Demo)",
+  number: "+91 8809955064",
   email_address: "tejaswi.demo@example.com",
   location_address: "Puducherry, India",
   isHireable: true

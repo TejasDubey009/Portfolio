@@ -1392,6 +1392,61 @@ a:hover {
   color: var(--accent-purple);
 }
 
+/* ------------------- MASKED PHONE HOVER STYLES ------------------- */
+.masked-phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px dashed rgba(99, 102, 241, 0.3);
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.masked-phone-link:hover {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.visible-digits {
+  color: var(--accent-purple);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.masked-dots {
+  letter-spacing: 3px;
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+.reveal-hint {
+  font-size: 0.75rem;
+  color: var(--text-subtitle);
+  margin-left: 8px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.phone-unmasked {
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+  animation: glow-text 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow-text {
+  from { text-shadow: 0 0 5px rgba(56, 189, 248, 0.4); }
+  to { text-shadow: 0 0 12px rgba(56, 189, 248, 0.8); }
+}
+
+
 
 
 

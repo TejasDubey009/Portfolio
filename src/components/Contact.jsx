@@ -20,6 +20,8 @@ export const Contact = () => {
     }
   };
 
+  const [isPhoneHovered, setIsPhoneHovered] = useState(false);
+
   return (
     <section className="main contact-section" id="contact">
       <div className="contact-div-main">
@@ -56,7 +58,23 @@ export const Contact = () => {
             {contactInfo.number && (
               <div className="contact-info-row">
                 <Phone size={20} className="contact-icon" />
-                <a href={`tel:${contactInfo.number}`}>{contactInfo.number}</a>
+                <a
+                  href={`tel:${contactInfo.number}`}
+                  className="masked-phone-link"
+                  onMouseEnter={() => setIsPhoneHovered(true)}
+                  onMouseLeave={() => setIsPhoneHovered(false)}
+                  title="Hover to reveal full phone number"
+                >
+                  {isPhoneHovered ? (
+                    <span className="phone-unmasked">+91 8809955064 ✨</span>
+                  ) : (
+                    <span className="phone-masked">
+                      <strong className="visible-digits">+91 8809</strong>
+                      <span className="masked-dots">••••••</span>
+                      <span className="reveal-hint">(hover to reveal)</span>
+                    </span>
+                  )}
+                </a>
               </div>
             )}
             {contactInfo.email_address && (
