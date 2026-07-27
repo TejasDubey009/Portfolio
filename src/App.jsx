@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { Header } from './components/Header';
 import { Greeting } from './components/Greeting';
+import { ServicesBento } from './components/ServicesBento';
+import { OpenSource } from './components/OpenSource';
 import { Skills } from './components/Skills';
 import { Proficiency } from './components/Proficiency';
 import { Education } from './components/Education';
 import { Experience } from './components/Experience';
-import { OpenSource } from './components/OpenSource';
 import { Achievements } from './components/Achievements';
 import { Blogs } from './components/Blogs';
 import { Talks } from './components/Talks';
@@ -27,25 +28,24 @@ function App() {
         {/* Custom Particle Follower Cursor */}
         <ParticleCursor />
 
-        {/* Navigation Header */}
+        {/* Cohesion Floating Glass Pill Navigation */}
         <Header onOpenCmd={() => setCmdOpen(true)} />
 
-        {/* Main Content Sections */}
+        {/* Main Cohesion Flow Sections */}
         <main>
-          <Greeting
-            onOpenResume={() => setResumeOpen(true)}
-          />
+          <Greeting onOpenResume={() => setResumeOpen(true)} />
+          <ServicesBento />
+          <OpenSource />
           <Skills />
           <Proficiency />
           <Education />
           <Experience />
-          <OpenSource />
           <Achievements />
           <Blogs />
           <Talks />
           <Contact />
         </main>
-        
+
         <Footer />
 
         {/* Interactive Modals */}

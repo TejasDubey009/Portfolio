@@ -3,7 +3,7 @@ import { greeting } from '../portfolio';
 import { SocialMedia } from './SocialMedia';
 import { Hero3DCanvas } from './Hero3DCanvas';
 import { ErrorBoundary } from './ErrorBoundary';
-import { FileText, Send, Sparkles } from 'lucide-react';
+import { FileText, ArrowDownRight, Sparkles } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { soundFx } from '../utils/audio';
 
@@ -19,8 +19,8 @@ export const Greeting = ({ onOpenResume }) => {
   const mouseXSpring = useSpring(x, { stiffness: 250, damping: 25 });
   const mouseYSpring = useSpring(y, { stiffness: 250, damping: 25 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['8deg', '-8deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-8deg', '8deg']);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['6deg', '-6deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-6deg', '6deg']);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -40,7 +40,7 @@ export const Greeting = ({ onOpenResume }) => {
   };
 
   return (
-    <section className="greet-main" id="greeting">
+    <section className="greet-main cohesion-hero" id="greeting">
       <motion.div
         className="greeting-3d-card"
         onMouseMove={handleMouseMove}
@@ -63,30 +63,36 @@ export const Greeting = ({ onOpenResume }) => {
               <div className="hero-badge-row">
                 <div className="hero-status-pill">
                   <span className="status-dot"></span>
-                  <span>Available for Hire &amp; Collaborations</span>
+                  <span>Available for Q3/Q4 Projects</span>
                 </div>
                 <div className="hero-3d-tag">
-                  <Sparkles size={16} className="hero-sparkle" />
+                  <Sparkles size={14} className="hero-sparkle" />
                   <span>Interactive 3D WebGL</span>
                 </div>
               </div>
+
+              <span className="hero-meta-subtitle">
+                CREATIVE FULL STACK ARCHITECT &amp; 3D DEVELOPER
+              </span>
+
               <h1 className="greeting-text">
-                {greeting.title}
-                <motion.span
-                  className="wave-emoji"
-                  animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
-                  transition={{ repeat: Infinity, duration: 2.5, repeatDelay: 1 }}
-                  style={{ display: 'inline-block' }}
-                >
-                  👋
-                </motion.span>
+                Crafting Next-Gen Web Systems &amp; <span className="title-gradient">3D Interactive Products</span>
               </h1>
+
               <p className="greeting-text-p">{greeting.subTitle}</p>
-              
+
               <SocialMedia />
 
               <div className="button-greeting-div">
-                {contactInfoHref()}
+                <a
+                  href="#projects"
+                  className="main-button primary-cta-btn"
+                  onClick={() => soundFx.playWarp()}
+                >
+                  <span>Explore Selected Works</span>
+                  <ArrowDownRight size={18} />
+                </a>
+
                 {greeting.resumeLink && (
                   <motion.button
                     className="main-button resume-btn"
@@ -95,7 +101,7 @@ export const Greeting = ({ onOpenResume }) => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <FileText size={18} style={{ marginRight: '8px' }} />
-                    See My Resume
+                    <span>See My Resume</span>
                   </motion.button>
                 )}
               </div>
@@ -118,19 +124,3 @@ export const Greeting = ({ onOpenResume }) => {
     </section>
   );
 };
-
-function contactInfoHref() {
-  return (
-    <motion.a
-      className="main-button contact-btn"
-      href="#contact"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <Send size={18} style={{ marginRight: '8px' }} />
-      Contact Me
-    </motion.a>
-  );
-}
-
-
