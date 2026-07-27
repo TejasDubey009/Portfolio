@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Terminal, Sparkles, X, ArrowRight, Zap, Code, ShieldCheck, Mail, FileText } from 'lucide-react';
+import { Search, Terminal, Sparkles, X, ArrowRight, Zap, Code, Mail, FileText } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 
-export const CommandPalette = ({ isOpen, onClose, onOpenArcade, onOpenResume }) => {
+export const CommandPalette = ({ isOpen, onClose, onOpenResume }) => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -13,7 +13,6 @@ export const CommandPalette = ({ isOpen, onClose, onOpenArcade, onOpenResume }) 
     { id: 'projects', title: 'Open Source Projects (Bento Grid)', icon: Terminal, action: () => scrollTo('#projects') },
     { id: 'contact', title: 'Contact Me & Reveal Number', icon: Mail, action: () => scrollTo('#contact') },
     { id: 'resume', title: 'View & Download Resume PDF', icon: FileText, action: () => { onOpenResume(); onClose(); } },
-    { id: 'arcade', title: 'Play Retro 3D Arcade Game 🎮', icon: Sparkles, action: () => { onOpenArcade(); onClose(); } },
     { id: 'github', title: 'Open GitHub Profile', icon: Terminal, action: () => window.open('https://github.com/TejasDubey009', '_blank') }
   ];
 
@@ -56,7 +55,7 @@ export const CommandPalette = ({ isOpen, onClose, onOpenArcade, onOpenResume }) 
           <input
             type="text"
             className="cmd-input"
-            placeholder="Type a command or search section (e.g. skills, arcade, resume)..."
+            placeholder="Type a command or search section (e.g. skills, resume, contact)..."
             value={query}
             onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
             autoFocus

@@ -3,11 +3,11 @@ import { greeting } from '../portfolio';
 import { SocialMedia } from './SocialMedia';
 import { Hero3DCanvas } from './Hero3DCanvas';
 import { ErrorBoundary } from './ErrorBoundary';
-import { FileText, Send, Sparkles, Gamepad2 } from 'lucide-react';
+import { FileText, Send, Sparkles } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { soundFx } from '../utils/audio';
 
-export const Greeting = ({ onOpenResume, onOpenArcade }) => {
+export const Greeting = ({ onOpenResume }) => {
   if (!greeting.displayGreeting) {
     return null;
   }
@@ -98,15 +98,6 @@ export const Greeting = ({ onOpenResume, onOpenArcade }) => {
                     See My Resume
                   </motion.button>
                 )}
-                <motion.button
-                  className="main-button arcade-hero-btn"
-                  onClick={() => { soundFx.playWarp(); onOpenArcade(); }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Gamepad2 size={18} style={{ marginRight: '8px' }} />
-                  Play 3D Arcade
-                </motion.button>
               </div>
             </div>
           </motion.div>

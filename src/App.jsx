@@ -16,12 +16,10 @@ import { Footer } from './components/Footer';
 import { CommandPalette } from './components/CommandPalette';
 import { ParticleCursor } from './components/ParticleCursor';
 import { ResumeModal } from './components/ResumeModal';
-import { ArcadeGame } from './components/ArcadeGame';
 
 function App() {
   const [cmdOpen, setCmdOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
-  const [arcadeOpen, setArcadeOpen] = useState(false);
 
   return (
     <ThemeProvider>
@@ -36,7 +34,6 @@ function App() {
         <main>
           <Greeting
             onOpenResume={() => setResumeOpen(true)}
-            onOpenArcade={() => setArcadeOpen(true)}
           />
           <Skills />
           <Proficiency />
@@ -55,18 +52,12 @@ function App() {
         <CommandPalette
           isOpen={cmdOpen}
           onClose={() => setCmdOpen(false)}
-          onOpenArcade={() => setArcadeOpen(true)}
           onOpenResume={() => setResumeOpen(true)}
         />
 
         <ResumeModal
           isOpen={resumeOpen}
           onClose={() => setResumeOpen(false)}
-        />
-
-        <ArcadeGame
-          isOpen={arcadeOpen}
-          onClose={() => setArcadeOpen(false)}
         />
       </div>
     </ThemeProvider>
