@@ -7,34 +7,34 @@ export const ServicesBento = () => {
     {
       num: '01',
       title: 'Full Stack Architecture',
-      subtitle: 'Scalable cloud backends, RESTful APIs, and robust data pipelines using Node.js & React.',
+      subtitle: 'Designing resilient cloud backends, clean API contracts, and scalable React architectures.',
       icon: Code2,
-      tag: 'Node • React • APIs',
-      highlight: '#6366f1'
+      tag: 'Node.js • React • REST APIs',
+      highlight: '#818cf8'
     },
     {
       num: '02',
-      title: '3D WebGL & Canvas',
-      subtitle: 'Interactive 3D WebGL scenes, particle engines, Three.js shaders, and dynamic canvas rendering.',
+      title: 'Interactive 3D WebGL',
+      subtitle: 'Building custom Three.js WebGL scenes, shader animations, and real-time canvas graphics.',
       icon: Cpu,
       tag: 'Three.js • WebGL • Shaders',
-      highlight: '#a855f7'
+      highlight: '#c084fc'
     },
     {
       num: '03',
-      title: 'Modern UI/UX Systems',
-      subtitle: 'Glassmorphic design tokens, fluid CSS typography, Framer Motion, and micro-interactions.',
+      title: 'Interface & Design Systems',
+      subtitle: 'Authoring glassmorphic design tokens, fluid micro-interactions, and accessible UI frameworks.',
       icon: Layout,
-      tag: 'Framer • Glassmorphism • UI',
-      highlight: '#06b6d4'
+      tag: 'UI/UX • Design Tokens • Motion',
+      highlight: '#38bdf8'
     },
     {
       num: '04',
-      title: 'High Performance & CWV',
-      subtitle: 'Rollup code splitting, sub-300ms Vite build optimizations, LCP rendering, and 60 FPS graphics.',
+      title: 'Performance Optimization',
+      subtitle: 'Optimizing LCP delivery, Rollup code splitting, sub-300ms Vite builds, and 60 FPS render loops.',
       icon: Rocket,
-      tag: 'Vite • Speed • 60 FPS',
-      highlight: '#10b981'
+      tag: 'Vite • Core Web Vitals • 60 FPS',
+      highlight: '#34d399'
     }
   ];
 
@@ -42,11 +42,11 @@ export const ServicesBento = () => {
     <section className="cohesion-section" id="services">
       <div className="section-header">
         <div className="cohesion-tag">
-          <span>OUR CAPABILITIES</span>
+          <span>CORE COMPETENCIES</span>
         </div>
         <h2 className="cohesion-section-title">
-          Designing &amp; building <br />
-          <span className="serif-italic">tailored</span> <span className="title-gradient">digital products.</span>
+          Architecting systems built for <br />
+          <span className="serif-italic">scale</span> &amp; <span className="title-gradient">performance.</span>
         </h2>
       </div>
 
@@ -66,7 +66,7 @@ export const ServicesBento = () => {
               <div className="service-card-top">
                 <span className="service-num">{item.num}</span>
                 <div className="service-icon-box">
-                  <IconComp size={22} style={{ color: item.highlight }} />
+                  <IconComp size={20} style={{ color: item.highlight }} />
                 </div>
               </div>
 

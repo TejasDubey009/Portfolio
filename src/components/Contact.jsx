@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { contactInfo } from '../portfolio';
 import { SocialMedia } from './SocialMedia';
-import { MapPin, Phone, Mail, CheckCircle2, Send, Sparkles } from 'lucide-react';
+import { MapPin, Phone, Mail, CheckCircle2, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { soundFx } from '../utils/audio';
 
@@ -33,12 +33,12 @@ export const Contact = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="cohesion-tag">
-            <span>GET IN TOUCH</span>
+            <span>START A CONVERSATION</span>
           </div>
 
           <h2 className="cohesion-cta-title">
-            Have a project in mind? <br />
-            <span className="title-gradient">Let's build something extraordinary.</span>
+            Let's build something <br />
+            <span className="serif-italic">exceptional</span> <span className="title-gradient">together.</span>
           </h2>
 
           <p className="cohesion-cta-subtitle">{contactInfo.subtitle}</p>
@@ -46,7 +46,7 @@ export const Contact = () => {
           {contactInfo.isHireable && (
             <div className="opportunity-badge">
               <CheckCircle2 size={16} className="badge-icon" />
-              <span>Available for Immediate Onboarding: Yes</span>
+              <span>Available for engineering &amp; consulting roles</span>
             </div>
           )}
 
@@ -98,7 +98,7 @@ export const Contact = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
         >
           <div className="form-group">
             <label>Your Name</label>
@@ -114,16 +114,16 @@ export const Contact = () => {
             <label>Email Address</label>
             <input
               type="email"
-              placeholder="name@domain.com"
+              placeholder="name@company.com"
               value={formState.email}
               onChange={(e) => setFormState({ ...formState, email: e.target.value })}
               required
             />
           </div>
           <div className="form-group">
-            <label>Project Details</label>
+            <label>Message</label>
             <textarea
-              placeholder="Tell me about your vision, goals, and timeline..."
+              placeholder="Tell me about your project, timeline, or requirements..."
               rows="4"
               value={formState.message}
               onChange={(e) => setFormState({ ...formState, message: e.target.value })}
@@ -133,8 +133,8 @@ export const Contact = () => {
           <motion.button
             type="submit"
             className="main-button cohesion-submit-btn"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <span>Send Direct Message</span>
             <Send size={16} />
@@ -146,7 +146,7 @@ export const Contact = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              Message received! I'll respond within 24 hours. ✨
+              Thank you! Message delivered successfully. ✨
             </motion.p>
           )}
         </motion.form>

@@ -24,24 +24,20 @@ body.light-mode {
   --button-hover: #6d28d9;
 }
 
-/* Dark Theme Variables (Cohesion Void Dark Theme - cohesion.framer.ai) */
+/* Dark Theme Variables (Senior UI/UX Obsidian Aesthetic) */
 body.dark-mode {
-  --bg-color: #08090a;
-  --bg-card: rgba(18, 20, 26, 0.65);
+  --bg-color: #090a0c;
+  --bg-card: rgba(18, 20, 26, 0.45);
   --bg-header: rgba(13, 14, 18, 0.75);
-  --text-color: #f8fafc;
+  --text-color: #f1f5f9;
   --text-subtitle: #94a3b8;
   --text-muted: #64748b;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-  --accent-purple: #8b5cf6;
-  --accent-light-purple: #a78bfa;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  --accent-purple: #818cf8;
+  --accent-light-purple: #c084fc;
   --accent-blue: #38bdf8;
-  --button-hover: #7c3aed;
-  --framer-mint: #66ffd9;
-  --framer-emerald: #00cc99;
-  --framer-periwinkle: #6670ff;
-  --framer-coral: #f94706;
+  --button-hover: #6366f1;
 }
 
 * {
