@@ -76,7 +76,7 @@ export const Greeting = ({ onOpenResume }) => {
               </span>
 
               <h1 className="greeting-text">
-                Crafting Next-Gen Web Systems &amp; <span className="title-gradient">3D Interactive Products</span>
+                Crafting digital experiences with <span className="serif-italic">precision</span> &amp; <span className="title-gradient">3D interactive style.</span>
               </h1>
 
               <p className="greeting-text-p">{greeting.subTitle}</p>

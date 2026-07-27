@@ -45,8 +45,8 @@ export const ServicesBento = () => {
           <span>OUR CAPABILITIES</span>
         </div>
         <h2 className="cohesion-section-title">
-          Crafting High-Performance <br />
-          <span className="title-gradient">Digital Experiences</span>
+          Designing &amp; building <br />
+          <span className="serif-italic">tailored</span> <span className="title-gradient">digital products.</span>
         </h2>
       </div>
 
