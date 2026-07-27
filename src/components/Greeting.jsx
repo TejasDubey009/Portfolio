@@ -59,9 +59,15 @@ export const Greeting = () => {
             style={{ transform: 'translateZ(30px)' }}
           >
             <div>
-              <div className="hero-3d-tag">
-                <Sparkles size={16} className="hero-sparkle" />
-                <span>Interactive 3D WebGL Hero</span>
+              <div className="hero-badge-row">
+                <div className="hero-status-pill">
+                  <span className="status-dot"></span>
+                  <span>Available for Hire &amp; Collaborations</span>
+                </div>
+                <div className="hero-3d-tag">
+                  <Sparkles size={16} className="hero-sparkle" />
+                  <span>Interactive 3D WebGL</span>
+                </div>
               </div>
               <h1 className="greeting-text">
                 {greeting.title}

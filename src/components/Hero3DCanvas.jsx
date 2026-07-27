@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Sparkles, Code2, Cpu, Globe, Rocket, RotateCcw, Layers } from 'lucide-react';
+import { Sparkles, Code2, Cpu, Globe, Rocket, RotateCcw } from 'lucide-react';
 
 export const Hero3DCanvas = () => {
   const mountRef = useRef(null);
@@ -23,19 +23,16 @@ export const Hero3DCanvas = () => {
     { label: 'High Performance', icon: Rocket, color: '#f43f5e' }
   ];
 
-  // Canvas texture generator for floating 3D Terminal Panel
-  const createTerminalTexture = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 320;
+  // Dynamic Terminal Canvas Texture Generator (supports live typing animation)
+  const drawTerminalCanvas = (canvas, charCount = 999, showCursor = true) => {
     const ctx = canvas.getContext('2d');
 
     // Glass Background
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
     ctx.fillRect(0, 0, 512, 320);
 
     // Border & Glow
-    ctx.strokeStyle = 'rgba(99, 102, 241, 0.6)';
+    ctx.strokeStyle = 'rgba(99, 102, 241, 0.7)';
     ctx.lineWidth = 6;
     ctx.strokeRect(3, 3, 506, 314);
 
@@ -53,7 +50,7 @@ export const Hero3DCanvas = () => {
     ctx.font = '600 16px Inter, monospace';
     ctx.fillText('⚡ portfolio_hero.3d.js', 180, 30);
 
-    // Code lines snippet
+    // Code snippet
     const lines = [
       { text: 'const developer = {', color: '#ec4899' },
       { text: '  name: "Tejaswi Dubey",', color: '#38bdf8' },
@@ -64,14 +61,38 @@ export const Hero3DCanvas = () => {
     ];
 
     ctx.font = 'bold 18px monospace';
+    let totalTyped = 0;
+
     lines.forEach((line, idx) => {
       ctx.fillStyle = '#475569';
       ctx.fillText(`${idx + 1}`, 22, 86 + idx * 36);
-      ctx.fillStyle = line.color;
-      ctx.fillText(line.text, 55, 86 + idx * 36);
-    });
 
-    return new THREE.CanvasTexture(canvas);
+      if (totalTyped < charCount) {
+        const textToDraw = line.text.substring(0, charCount - totalTyped);
+        ctx.fillStyle = line.color;
+        ctx.fillText(textToDraw, 55, 86 + idx * 36);
+
+        // Render Blinking Cursor at current typing position
+        if (textToDraw.length < line.text.length || idx === lines.length - 1) {
+          if (showCursor && totalTyped + textToDraw.length >= charCount - 1) {
+            const textWidth = ctx.measureText(textToDraw).width;
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillRect(57 + textWidth, 68 + idx * 36, 10, 20);
+          }
+        }
+      }
+      totalTyped += line.text.length;
+    });
+  };
+
+  const createTerminalTexture = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 320;
+    drawTerminalCanvas(canvas, 999, true);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.userData = { canvas };
+    return texture;
   };
 
   // Helper for floating node label textures
@@ -81,7 +102,7 @@ export const Hero3DCanvas = () => {
     canvas.height = 256;
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
     ctx.beginPath();
     ctx.arc(128, 128, 120, 0, Math.PI * 2);
     ctx.fill();
@@ -128,7 +149,7 @@ export const Hero3DCanvas = () => {
     const masterGroup = new THREE.Group();
     scene.add(masterGroup);
 
-    // Static Terminal Group for monitor (stays facing forward)
+    // Static Terminal Group for monitor & keyboard (facing forward)
     const terminalGroup = new THREE.Group();
     scene.add(terminalGroup);
 
@@ -148,17 +169,17 @@ export const Hero3DCanvas = () => {
     const frameGeo = new THREE.BoxGeometry(2.7, 1.7, 0.1);
     const frameMat = new THREE.MeshPhysicalMaterial({
       color: 0x1e1b4b,
-      metalness: 0.8,
+      metalness: 0.85,
       roughness: 0.2,
       clearcoat: 1.0,
       transparent: true,
-      opacity: 0.85
+      opacity: 0.88
     });
     const frameMesh = new THREE.Mesh(frameGeo, frameMat);
     frameMesh.position.set(0, 0.2, 0.42);
     terminalGroup.add(frameMesh);
 
-    // 2. 3D Mechanical Developer Keyboard (Replaces pink ball underneath monitor)
+    // 2. 3D Mechanical Developer Keyboard (With Keywave animation)
     const keyboardGroup = new THREE.Group();
     keyboardGroup.position.set(0, -0.95, 0.55);
     keyboardGroup.rotation.x = 0.38; // Tilted toward user for 3D perspective
@@ -186,13 +207,10 @@ export const Hero3DCanvas = () => {
     rgbStripMesh.position.y = -0.04;
     keyboardGroup.add(rgbStripMesh);
 
-    // Keycaps Materials
+    // Keycaps Grid Layout & Keywave Tracker
     const keyCapGeo = new THREE.BoxGeometry(0.14, 0.07, 0.14);
-    const keyCapMatDark = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3, metalness: 0.4 });
-    const keyCapMatAccent = new THREE.MeshStandardMaterial({ color: themePalettes[activeTab].primary, roughness: 0.2, metalness: 0.6 });
-    const keyCapMatCyan = new THREE.MeshStandardMaterial({ color: themePalettes[activeTab].accent, roughness: 0.2, metalness: 0.6 });
+    const keyCapMeshes = [];
 
-    // Keycaps Grid Layout
     const keyRows = [
       { count: 14, z: -0.34 },
       { count: 14, z: -0.17 },
@@ -206,27 +224,36 @@ export const Hero3DCanvas = () => {
       const spacing = 0.17;
       for (let i = 0; i < row.count; i++) {
         let keyMesh;
+        const keyMat = new THREE.MeshStandardMaterial({
+          color: 0x1e293b,
+          roughness: 0.3,
+          metalness: 0.5
+        });
+
         if (rIdx === 4 && i === 4) {
           // Spacebar
           const spaceGeo = new THREE.BoxGeometry(0.75, 0.07, 0.14);
-          keyMesh = new THREE.Mesh(spaceGeo, keyCapMatAccent);
+          keyMesh = new THREE.Mesh(spaceGeo, keyMat);
           keyMesh.position.set(0, 0.08, row.z);
           i += 3;
         } else {
-          let mat = keyCapMatDark;
-          if ((rIdx === 0 && i === 0) || (rIdx === 3 && i === row.count - 1)) mat = keyCapMatAccent; // Esc / Enter
-          else if (i === 0 || i === row.count - 1) mat = keyCapMatCyan;
+          if ((rIdx === 0 && i === 0) || (rIdx === 3 && i === row.count - 1)) {
+            keyMat.color.setHex(themePalettes[activeTab].primary); // Esc / Enter
+          } else if (i === 0 || i === row.count - 1) {
+            keyMat.color.setHex(themePalettes[activeTab].accent);
+          }
 
-          keyMesh = new THREE.Mesh(keyCapGeo, mat);
+          keyMesh = new THREE.Mesh(keyCapGeo, keyMat);
           keyMesh.position.set(startX + i * spacing, 0.08, row.z);
         }
+
         keyboardGroup.add(keyMesh);
+        keyCapMeshes.push({ mesh: keyMesh, initialY: 0.08, posX: keyMesh.position.x });
       }
     });
 
-    // 3. Orbiting Rings
+    // 3. Orbiting Energy Rings
     const ringGroup = new THREE.Group();
-    ringGroup.position.set(0, 0, 0);
     masterGroup.add(ringGroup);
 
     const ringGeo = new THREE.TorusGeometry(2.4, 0.02, 16, 120);
@@ -249,7 +276,26 @@ export const Hero3DCanvas = () => {
     ring2.rotation.x = -Math.PI / 6;
     ringGroup.add(ring2);
 
-    // 4. Orbiting Tech Nodes (Spheres with Canvas Textures)
+    // 4. Floating Tech Polyhedrons / Crystals
+    const crystalGroup = new THREE.Group();
+    masterGroup.add(crystalGroup);
+
+    const crystalGeo = new THREE.OctahedronGeometry(0.25, 0);
+    const crystalMat = new THREE.MeshStandardMaterial({
+      color: themePalettes[activeTab].accent,
+      metalness: 0.9,
+      roughness: 0.1,
+      wireframe: true
+    });
+
+    for (let c = 0; c < 4; c++) {
+      const crystal = new THREE.Mesh(crystalGeo, crystalMat);
+      const angle = (c / 4) * Math.PI * 2;
+      crystal.position.set(Math.cos(angle) * 1.8, Math.sin(angle) * 0.8, Math.sin(angle) * 1.8);
+      crystalGroup.add(crystal);
+    }
+
+    // 5. Orbiting Tech Nodes (Spheres with Canvas Textures)
     const nodesData = [
       { label: 'React', color: '#61dafb', angle: 0 },
       { label: '3D', color: '#a855f7', angle: Math.PI / 3 },
@@ -273,13 +319,13 @@ export const Hero3DCanvas = () => {
       });
       const nodeMesh = new THREE.Mesh(nodeGeo, nodeMat);
       nodeMesh.position.x = Math.cos(item.angle) * radius;
-      nodeMesh.position.z = Math.sin(item.angle) * radius;
+      nodeMesh.position.z = Math.sin(item.angle * radius);
       nodeMesh.position.y = Math.sin(item.angle * 2) * 0.4;
       nodeGroup.add(nodeMesh);
       nodeMeshes.push({ mesh: nodeMesh, angle: item.angle, radius, speed: 0.01 });
     });
 
-    // 5. Constellation Lines between Nodes and Center
+    // Constellation Lines
     const lineMaterial = new THREE.LineBasicMaterial({
       color: themePalettes[activeTab].primary,
       transparent: true,
@@ -291,7 +337,7 @@ export const Hero3DCanvas = () => {
     const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
     masterGroup.add(linesMesh);
 
-    // 6. Particle Field Universe (600 glowing particles)
+    // 6. Starfield Particle System
     const particleCount = 600;
     const particlePositions = new Float32Array(particleCount * 3);
 
@@ -315,7 +361,7 @@ export const Hero3DCanvas = () => {
     const particleSystem = new THREE.Points(particleGeo, particleMat);
     scene.add(particleSystem);
 
-    // 7. Lighting setup
+    // Dynamic Point Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
@@ -327,7 +373,7 @@ export const Hero3DCanvas = () => {
     light2.position.set(-5, -5, 2);
     scene.add(light2);
 
-    // Mouse Drag / Orbit Controls Simulation
+    // Drag Orbit Controls
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
     let mouseX = 0;
@@ -366,7 +412,7 @@ export const Hero3DCanvas = () => {
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
 
-    // Resize Handling
+    // Resize Observer
     const resizeObserver = new ResizeObserver(([entry]) => {
       if (!entry) return;
       const w = entry.contentRect.width;
@@ -375,10 +421,9 @@ export const Hero3DCanvas = () => {
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     });
-
     resizeObserver.observe(container);
 
-    // Intersection Observer to pause rendering when offscreen (conserve device resources)
+    // Intersection Observer
     let isVisible = true;
     const intersectionObserver = new IntersectionObserver(([entry]) => {
       if (entry) {
@@ -387,15 +432,35 @@ export const Hero3DCanvas = () => {
     });
     intersectionObserver.observe(container);
 
-    // Render loop
+    // Render loop with typing & RGB keywave
     let animationId;
     const clock = new THREE.Clock();
+    let typedCharCount = 0;
 
     const animate = () => {
       animationId = requestAnimationFrame(animate);
-      if (!isVisible) return; // Pause WebGL loop offscreen
+      if (!isVisible) return;
 
       const time = clock.getElapsedTime();
+
+      // Live Code Typing effect on terminal texture
+      typedCharCount = Math.floor(time * 18) % 180;
+      const showCursor = Math.floor(time * 3) % 2 === 0;
+      drawTerminalCanvas(terminalTex.userData.canvas, typedCharCount, showCursor);
+      terminalTex.needsUpdate = true;
+
+      // 3D Keyboard Live RGB Keywave animation
+      keyCapMeshes.forEach((item) => {
+        const keyWave = Math.sin(time * 5 - item.posX * 3);
+        if (keyWave > 0.75) {
+          item.mesh.position.y = item.initialY - 0.02;
+          item.mesh.material.emissive.setHex(themePalettes[activeTab].accent);
+          item.mesh.material.emissiveIntensity = 0.6;
+        } else {
+          item.mesh.position.y = item.initialY;
+          item.mesh.material.emissiveIntensity = 0;
+        }
+      });
 
       // Smooth inertia rotation
       if (!isDragging) {
@@ -403,7 +468,6 @@ export const Hero3DCanvas = () => {
         targetRotationX += (-mouseY * 0.4 - targetRotationX) * 0.04;
       }
 
-      // Master Group spins and orbits
       masterGroup.rotation.y = time * 0.15 + targetRotationY;
       masterGroup.rotation.x = Math.sin(time * 0.2) * 0.1 + targetRotationX;
 
@@ -412,8 +476,14 @@ export const Hero3DCanvas = () => {
       terminalGroup.rotation.y = mouseX * 0.08;
       terminalGroup.rotation.x = -mouseY * 0.08;
 
-      // Keyboard RGB Strip pulse
+      // Keyboard RGB Strip pulse & orbital lights
       rgbStripMat.opacity = 0.6 + Math.sin(time * 2.5) * 0.25;
+      light1.position.x = Math.sin(time * 0.8) * 5;
+      light1.position.z = Math.cos(time * 0.8) * 5;
+
+      // Crystal polyhedrons animation
+      crystalGroup.rotation.y = -time * 0.4;
+      crystalGroup.rotation.z = time * 0.2;
 
       // Rings rotation
       ringGroup.rotation.z = time * 0.25;
@@ -427,7 +497,6 @@ export const Hero3DCanvas = () => {
         item.mesh.position.y = Math.sin(item.angle * 2 + time) * 0.35;
         item.mesh.rotation.y = -masterGroup.rotation.y;
 
-        // Line connect to center
         const pIdx = idx * 6;
         positions[pIdx] = item.mesh.position.x;
         positions[pIdx + 1] = item.mesh.position.y;
@@ -464,9 +533,9 @@ export const Hero3DCanvas = () => {
       rgbStripGeo.dispose();
       rgbStripMat.dispose();
       keyCapGeo.dispose();
-      keyCapMatDark.dispose();
-      keyCapMatAccent.dispose();
-      keyCapMatCyan.dispose();
+      keyCapMeshes.forEach(k => k.mesh.material.dispose());
+      crystalGeo.dispose();
+      crystalMat.dispose();
       ringGeo.dispose();
       ringMat1.dispose();
       ringMat2.dispose();
