@@ -1,46 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { greeting } from '../portfolio';
-import { ArrowUp, Heart } from 'lucide-react';
+import { footer } from '../data/site'
 
-export const Footer = () => {
-  const [showScrollTop, setShowScrollTop] = useState(false);
+const isExternal = (href) => href.startsWith('http') || href.startsWith('mailto:')
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
+export default function Footer() {
   return (
-    <footer className="footer-div">
-      <p className="footer-text">
-        Made with <Heart size={16} fill="#eb4d4b" color="#eb4d4b" style={{ margin: '0 4px', display: 'inline-block', verticalAlign: 'middle' }} /> by{' '}
-        <a href="https://github.com/saadpasta/developerFolio" target="_blank" rel="noopener noreferrer">
-          {greeting.username}
-        </a>
-      </p>
-      <p className="footer-subtext">Theme replicated from DeveloperFolio open-source template</p>
+    <footer className="footer">
+      <span className="anchor" id="contact" />
 
-      {showScrollTop && (
-        <button
-          className="scroll-top-btn"
-          onClick={scrollToTop}
-          aria-label="Scroll to top"
-          title="Scroll to top"
-        >
-          <ArrowUp size={22} />
-        </button>
-      )}
+      <div className="page">
+        <div className="footer__columns">
+          {footer.columns.map((column) => (
+            <div key={column.heading}>
+              <h2 className="footer__heading">{column.heading}</h2>
+              {column.links.map((link) => (
+                <a
+                  className="footer__link"
+                  href={link.href}
+                  key={link.label}
+                  {...(isExternal(link.href)
+                    ? { target: '_blank', rel: 'noreferrer' }
+                    : {})}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="footer__bottom">
+          <p>
+            {footer.copyright.prefix} {footer.copyright.year}
+          </p>
+          <p>
+            {footer.credits.prefix}{' '}
+            <a href={footer.credits.author.href} target="_blank" rel="noreferrer">
+              {footer.credits.author.label}
+            </a>{' '}
+            {footer.credits.middle}{' '}
+            <a href={footer.credits.tool.href} target="_blank" rel="noreferrer">
+              {footer.credits.tool.label}
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <p className="footer__wordmark" aria-hidden="true">
+        {footer.wordmark}
+      </p>
     </footer>
-  );
-};
+  )
+}

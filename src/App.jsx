@@ -1,67 +1,41 @@
-import React, { useState } from 'react';
-import { ThemeProvider } from './context/ThemeContext';
-import { Header } from './components/Header';
-import { Greeting } from './components/Greeting';
-import { ServicesBento } from './components/ServicesBento';
-import { OpenSource } from './components/OpenSource';
-import { Skills } from './components/Skills';
-import { Proficiency } from './components/Proficiency';
-import { Education } from './components/Education';
-import { Experience } from './components/Experience';
-import { Achievements } from './components/Achievements';
-import { Blogs } from './components/Blogs';
-import { Talks } from './components/Talks';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
+import { useEffect } from 'react'
+import Nav from './components/Nav'
+import Hero from './components/Hero'
+import About from './components/About'
+import Testimonials from './components/Testimonials'
+import Stack from './components/Stack'
+import Services from './components/Services'
+import Projects from './components/Projects'
+import Footer from './components/Footer'
 
-import { CommandPalette } from './components/CommandPalette';
-import { ParticleCursor } from './components/ParticleCursor';
-import { ResumeModal } from './components/ResumeModal';
-
-function App() {
-  const [cmdOpen, setCmdOpen] = useState(false);
-  const [resumeOpen, setResumeOpen] = useState(false);
+export default function App() {
+  // Anchors only exist once React has painted, so a deep link like /#stack has to
+  // be resolved after mount rather than by the browser's own jump.
+  useEffect(() => {
+    const { hash } = window.location
+    if (!hash) return
+    // Wait for images to settle, otherwise late layout shifts move the target.
+    const jump = () => document.querySelector(hash)?.scrollIntoView()
+    if (document.readyState === 'complete') {
+      jump()
+      return
+    }
+    window.addEventListener('load', jump, { once: true })
+    return () => window.removeEventListener('load', jump)
+  }, [])
 
   return (
-    <ThemeProvider>
-      <div className="App">
-        {/* Custom Particle Follower Cursor */}
-        <ParticleCursor />
-
-        {/* Cohesion Floating Glass Pill Navigation */}
-        <Header onOpenCmd={() => setCmdOpen(true)} />
-
-        {/* Main Cohesion Flow Sections */}
-        <main>
-          <Greeting onOpenResume={() => setResumeOpen(true)} />
-          <ServicesBento />
-          <OpenSource />
-          <Skills />
-          <Proficiency />
-          <Education />
-          <Experience />
-          <Achievements />
-          <Blogs />
-          <Talks />
-          <Contact />
-        </main>
-
-        <Footer />
-
-        {/* Interactive Modals */}
-        <CommandPalette
-          isOpen={cmdOpen}
-          onClose={() => setCmdOpen(false)}
-          onOpenResume={() => setResumeOpen(true)}
-        />
-
-        <ResumeModal
-          isOpen={resumeOpen}
-          onClose={() => setResumeOpen(false)}
-        />
-      </div>
-    </ThemeProvider>
-  );
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <About />
+        <Testimonials />
+        <Stack />
+        <Services />
+        <Projects />
+      </main>
+      <Footer />
+    </>
+  )
 }
-
-export default App;
