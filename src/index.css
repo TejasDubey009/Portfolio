@@ -38,6 +38,10 @@ body.dark-mode {
   --accent-light-purple: #a78bfa;
   --accent-blue: #38bdf8;
   --button-hover: #7c3aed;
+  --framer-mint: #66ffd9;
+  --framer-emerald: #00cc99;
+  --framer-periwinkle: #6670ff;
+  --framer-coral: #f94706;
 }
 
 * {
