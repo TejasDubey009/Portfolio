@@ -43,7 +43,6 @@ export const nav = {
     { label: 'Projects', href: '#projects' },
     { label: 'Contact', href: '#contact' },
   ],
-  cta: { label: 'Sign Up', href: '#contact' },
 }
 
 export const hero = {

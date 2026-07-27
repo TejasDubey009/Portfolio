@@ -46,12 +46,6 @@ export default function Nav() {
           </a>
         ))}
       </div>
-
-      <div className="nav__group">
-        <a className="nav__link" href={nav.cta.href} onClick={() => setOpen(false)}>
-          {nav.cta.label}
-        </a>
-      </div>
     </nav>
   )
 }
