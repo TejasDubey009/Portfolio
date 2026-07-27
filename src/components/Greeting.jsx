@@ -3,10 +3,11 @@ import { greeting } from '../portfolio';
 import { SocialMedia } from './SocialMedia';
 import { Hero3DCanvas } from './Hero3DCanvas';
 import { ErrorBoundary } from './ErrorBoundary';
-import { FileText, Send, Sparkles } from 'lucide-react';
+import { FileText, Send, Sparkles, Gamepad2 } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { soundFx } from '../utils/audio';
 
-export const Greeting = () => {
+export const Greeting = ({ onOpenResume, onOpenArcade }) => {
   if (!greeting.displayGreeting) {
     return null;
   }
@@ -87,18 +88,25 @@ export const Greeting = () => {
               <div className="button-greeting-div">
                 {contactInfoHref()}
                 {greeting.resumeLink && (
-                  <motion.a
+                  <motion.button
                     className="main-button resume-btn"
-                    href={greeting.resumeLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => { soundFx.playWarp(); onOpenResume(); }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <FileText size={18} style={{ marginRight: '8px' }} />
                     See My Resume
-                  </motion.a>
+                  </motion.button>
                 )}
+                <motion.button
+                  className="main-button arcade-hero-btn"
+                  onClick={() => { soundFx.playWarp(); onOpenArcade(); }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Gamepad2 size={18} style={{ marginRight: '8px' }} />
+                  Play 3D Arcade
+                </motion.button>
               </div>
             </div>
           </motion.div>
