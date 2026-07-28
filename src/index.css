@@ -307,7 +307,8 @@ button {
 }
 
 [data-theme="dark"] .hero__marquee-word {
-  color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  opacity: 0.95;
 }
 
 @keyframes marquee {
