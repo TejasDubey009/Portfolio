@@ -64,7 +64,7 @@ export const hero = {
 
 export const about = {
   heading: 'About Me',
-  cvLink: { label: 'Read My CV', href: 'https://x.com/TejaswiDubey01' },
+  cvLink: { label: 'Read My CV', href: '/resume.pdf' },
   paragraphs: [
     "Greetings! I'm Tejaswi, and I navigate the exciting world of web design, where every pixel serves a purpose. Combining a deep understanding of user experience with a knack for transforming ideas into visually stunning interfaces, I approach each project with a burning passion to craft something truly remarkable.",
     'My web design journey began with a solid foundation in design principles, meticulously honed through years of formal education. I hold a degree in Graphic Design, where I not only acquired technical expertise but also developed a profound appreciation for the beautiful union of aesthetics and functionality.',
