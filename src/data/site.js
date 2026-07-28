@@ -46,7 +46,7 @@ export const nav = {
 }
 
 export const hero = {
-  marquee: 'LARRY BRONX',
+  marquee: 'TEJASWI DUBEY',
   greeting: "Hi, I'm ",
   name: 'Tejas',
   suffix: '!',
