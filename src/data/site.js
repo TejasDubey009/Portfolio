@@ -64,11 +64,11 @@ export const hero = {
 
 export const about = {
   heading: 'About Me',
-  cvLink: { label: 'Read My CV', href: 'https://twitter.com/CristianMielu' },
+  cvLink: { label: 'Read My CV', href: 'https://x.com/TejaswiDubey01' },
   paragraphs: [
-    "Greetings! I'm Larry, and I navigate the exciting world of web design, where every pixel serves a purpose. Combining a deep understanding of user experience with a knack for transforming ideas into visually stunning interfaces, I approach each project with a burning passion to craft something truly remarkable.",
-    'My web design journey began with a solid foundation in design principles, meticulously honed through years of formal education. I hold a degree in Graphic Design from XYZ University, where I not only acquired technical expertise but also developed a profound appreciation for the beautiful union of aesthetics and functionality.',
-    'My tech stack mirrors the vibrant diversity of the web itself. From the core languages of HTML5, CSS3, and JavaScript to an arsenal of design tools like Adobe Creative Suite and Sketch, I stay well-equipped. However, I believe in constantly pushing the boundaries, exploring emerging technologies and design trends to ensure my work remains both timeless and cutting-edge.',
+    "Greetings! I'm Tejaswi, and I navigate the exciting world of web design, where every pixel serves a purpose. Combining a deep understanding of user experience with a knack for transforming ideas into visually stunning interfaces, I approach each project with a burning passion to craft something truly remarkable.",
+    'My web design journey began with a solid foundation in design principles, meticulously honed through years of formal education. I hold a degree in Graphic Design, where I not only acquired technical expertise but also developed a profound appreciation for the beautiful union of aesthetics and functionality.',
+    'My tech stack mirrors the vibrant diversity of the web itself. From the core languages of HTML5, CSS3, and JavaScript to an arsenal of design tools, I stay well-equipped. However, I believe in constantly pushing the boundaries, exploring emerging technologies and design trends to ensure my work remains both timeless and cutting-edge.',
   ],
 }
 
@@ -171,9 +171,8 @@ export const footer = {
     {
       heading: 'Social',
       links: [
-        { label: 'Framer', href: 'https://framer.link/UdEP7eA' },
-        { label: 'X (Twitter)', href: 'https://twitter.com/CristianMielu' },
-        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/cristian-mielu-a8b2b3b5/' },
+        { label: 'X (Twitter)', href: 'https://x.com/TejaswiDubey01' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/tejaswi-dubey-b4a992227/' },
       ],
     },
     {
