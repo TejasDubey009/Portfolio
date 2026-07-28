@@ -6,12 +6,17 @@
   --black: #000000;
   --ink: #4d4d4d;
   --white: #ffffff;
+  --bg: #ffffff;
+  --card-bg: #ffffff;
   --accent: #f94706;          /* nav pill / active state */
   --peri: #6670ff;            /* periwinkle accent */
   --peri-05: rgba(102, 112, 255, 0.05);
   --peri-10: rgba(102, 112, 255, 0.1);
   --ghost: #f2f2f2;           /* oversized service numerals */
   --off: #fafafa;
+  --nav-bg: rgba(255, 255, 255, 0.82);
+  --nav-border: rgba(0, 0, 0, 0.06);
+  --card-border: rgba(0, 0, 0, 0.08);
 
   --r-sm: 24px;
   --r-md: 48px;
@@ -28,6 +33,25 @@
   --ease: cubic-bezier(0.44, 0, 0.56, 1);
 }
 
+[data-theme="dark"] {
+  --black: #f3f4f6;
+  --ink: #a1a1aa;
+  --white: #0b0c10;
+  --bg: #090a0f;
+  --card-bg: #12141d;
+  --accent: #ff5722;
+  --peri: #818cf8;
+  --peri-05: rgba(129, 140, 248, 0.08);
+  --peri-10: rgba(129, 140, 248, 0.16);
+  --ghost: #161824;
+  --off: #161824;
+  --nav-bg: rgba(18, 20, 29, 0.85);
+  --nav-border: rgba(255, 255, 255, 0.12);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
 *,
 *::before,
 *::after {
@@ -41,7 +65,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--white);
+  background: var(--bg);
   color: var(--black);
   font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
   font-size: 16px;
@@ -49,6 +73,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
 h1,
@@ -95,7 +120,8 @@ button {
 .section {
   position: relative;
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--bg);
+  transition: background-color 0.4s var(--ease);
 }
 
 .section__heading {
@@ -145,12 +171,28 @@ button {
   align-items: center;
   gap: 4px;
   padding: 8px;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--nav-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--nav-border);
   border-radius: var(--r-pill);
   box-shadow: var(--shadow-soft);
   pointer-events: auto;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.nav__theme-toggle {
+  padding: 10px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav__theme-icon {
+  font-size: 17px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav__link {
@@ -260,8 +302,12 @@ button {
   font-weight: 900;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  white-space: nowrap;
   color: var(--black);
+  transition: color 0.4s var(--ease);
+}
+
+[data-theme="dark"] .hero__marquee-word {
+  color: rgba(255, 255, 255, 0.05);
 }
 
 @keyframes marquee {
