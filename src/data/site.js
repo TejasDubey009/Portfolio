@@ -184,10 +184,5 @@ export const footer = {
     },
   ],
   copyright: { prefix: '© Copyright', year: '2026' },
-  credits: {
-    prefix: 'Made by',
-    author: { label: 'UIhub.design', href: 'https://www.uihub.design/' },
-    middle: 'in',
-    tool: { label: 'Framer', href: 'https://framer.link/cristianmielu' },
-  },
+  credits: { text: 'Made by Tejaswi Dubey' },
 }

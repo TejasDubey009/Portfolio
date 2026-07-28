@@ -32,16 +32,7 @@ export default function Footer() {
           <p>
             {footer.copyright.prefix} {footer.copyright.year}
           </p>
-          <p>
-            {footer.credits.prefix}{' '}
-            <a href={footer.credits.author.href} target="_blank" rel="noreferrer">
-              {footer.credits.author.label}
-            </a>{' '}
-            {footer.credits.middle}{' '}
-            <a href={footer.credits.tool.href} target="_blank" rel="noreferrer">
-              {footer.credits.tool.label}
-            </a>
-          </p>
+          <p>{footer.credits.text}</p>
         </div>
       </div>
 

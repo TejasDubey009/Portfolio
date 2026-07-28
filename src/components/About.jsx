@@ -11,7 +11,6 @@ function Badge() {
       transition={{ type: 'spring', stiffness: 300, damping: 18 }}
     >
       <div className="about__badge-glow" />
-      <span className="about__badge-ring" />
       <span className="about__badge-counter-ring" />
       
       <div className="about__badge-hub">
