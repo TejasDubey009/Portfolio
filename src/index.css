@@ -414,39 +414,113 @@ button {
 
 .about__badge {
   position: relative;
-  width: 165px;
-  height: 165px;
+  width: 175px;
+  height: 175px;
   display: grid;
   place-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.about__badge-glow {
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 74, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+  filter: blur(10px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  opacity: 0.5;
+}
+
+.about__badge:hover .about__badge-glow {
+  opacity: 1;
+  transform: scale(1.3);
 }
 
 .about__badge-ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid var(--black);
+  border: 1px solid rgba(0, 0, 0, 0.85);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
-.about__badge-ring--inner {
-  inset: 34px;
+.about__badge-counter-ring {
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(0, 0, 0, 0.25);
+  animation: spin-counter 30s linear infinite;
+}
+
+.about__badge-hub {
+  position: absolute;
+  inset: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  display: grid;
+  place-items: center;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.about__badge:hover .about__badge-hub {
+  background: var(--black);
+  border-color: var(--black);
+  transform: scale(1.06);
+}
+
+.about__badge-icon {
+  font-size: 16px;
+  color: var(--black);
+  animation: pulse-sparkle 2.5s ease-in-out infinite alternate;
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.about__badge:hover .about__badge-icon {
+  color: var(--white);
+  transform: scale(1.2) rotate(45deg);
 }
 
 .about__badge svg {
   position: absolute;
-  inset: 12px;
+  inset: 10px;
   animation: spin 20s linear infinite;
 }
 
 .about__badge svg text {
   font-family: 'Public Sans', sans-serif;
-  font-size: 12px;
-  word-spacing: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  word-spacing: 6px;
   fill: var(--black);
+  text-transform: uppercase;
 }
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-counter {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes pulse-sparkle {
+  0% {
+    opacity: 0.65;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.15);
   }
 }
 

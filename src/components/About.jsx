@@ -3,9 +3,21 @@ import { about, hero, images } from '../data/site'
 
 function Badge() {
   return (
-    <div className="about__badge" aria-hidden="true">
+    <motion.div
+      className="about__badge"
+      aria-hidden="true"
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+    >
+      <div className="about__badge-glow" />
       <span className="about__badge-ring" />
-      <span className="about__badge-ring about__badge-ring--inner" />
+      <span className="about__badge-counter-ring" />
+      
+      <div className="about__badge-hub">
+        <span className="about__badge-icon">✦</span>
+      </div>
+
       <svg viewBox="0 0 100 100" overflow="visible">
         <path
           id="about-badge-curve"
@@ -18,7 +30,7 @@ function Badge() {
           </textPath>
         </text>
       </svg>
-    </div>
+    </motion.div>
   )
 }
 
