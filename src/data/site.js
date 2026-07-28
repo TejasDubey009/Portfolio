@@ -150,13 +150,13 @@ export const projects = {
 }
 
 export const footer = {
-  wordmark: 'COHESION',
+  wordmark: '',
   columns: [
     {
       heading: 'Contact Me',
       links: [
         { label: 'Book a Call', href: 'https://calendly.com/' },
-        { label: 'mielucristian@gmail.com', href: 'mailto:mielucristian@gmail.com' },
+        { label: 'Tejaswi.dubey@icodejr.com', href: 'mailto:Tejaswi.dubey@icodejr.com' },
       ],
     },
     {

@@ -45,9 +45,11 @@ export default function Footer() {
         </div>
       </div>
 
-      <p className="footer__wordmark" aria-hidden="true">
-        {footer.wordmark}
-      </p>
+      {footer.wordmark && (
+        <p className="footer__wordmark" aria-hidden="true">
+          {footer.wordmark}
+        </p>
+      )}
     </footer>
   )
 }
