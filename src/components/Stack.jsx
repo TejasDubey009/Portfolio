@@ -6,10 +6,24 @@ import { logos } from '../data/logos'
 function StackCard({ card, index }) {
   const [flipped, setFlipped] = useState(false)
 
+  const toggle = () => setFlipped((v) => !v)
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      toggle()
+    }
+  }
+
   return (
     <motion.div
       className={`stack__card${flipped ? ' is-flipped' : ''}`}
-      onClick={() => setFlipped((v) => !v)}
+      onClick={toggle}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-expanded={flipped}
+      aria-label={`${card.name} tech stack card. Tap or press enter to toggle description.`}
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}

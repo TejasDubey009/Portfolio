@@ -581,80 +581,89 @@ button {
 }
 
 /* --------------------------------------------------------------------------
-   Testimonials
+   Experience
    -------------------------------------------------------------------------- */
 
-.testimonials {
-  padding: 0 0 var(--section-y);
+.experience {
+  padding-bottom: var(--section-y);
 }
 
-.testimonials__viewport {
-  overflow: hidden;
-  border-radius: var(--r-md);
-}
-
-.testimonials__track {
-  display: flex;
-  transition: transform 0.6s var(--ease);
-}
-
-.testimonials__slide {
-  flex: 0 0 100%;
+.experience__container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 24px;
-  text-align: center;
+  gap: 24px;
 }
 
-.testimonials__photo {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
+.experience__card {
+  position: relative;
+  overflow: hidden;
   background: var(--peri-05);
-  object-fit: contain;
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-md);
+  padding: 48px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
-.testimonials__name {
-  font-size: 28px;
-  font-weight: 500;
+.experience__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--peri);
+  box-shadow: var(--shadow-soft);
 }
 
-.testimonials__role {
-  font-size: 16px;
-  color: var(--ink);
-}
-
-.testimonials__quote {
-  max-width: 940px;
-  margin-top: 8px;
-  font-size: 20px;
-  font-style: italic;
-  line-height: 1.2;
-  color: var(--ink);
-}
-
-.testimonials__controls {
+.experience__header {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 48px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-.testimonials__arrow {
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--peri-05);
-  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+.experience__company {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--peri);
+  margin-bottom: 6px;
 }
 
-.testimonials__arrow:hover {
-  background: var(--peri-10);
-  transform: translateY(-2px);
+.experience__role {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--black);
+}
+
+.experience__period {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  color: var(--black);
+  border: 1px solid var(--card-border);
+}
+
+.experience__description {
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 840px;
+}
+
+.experience__shape {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: clamp(90px, 14vw, 150px);
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 /* --------------------------------------------------------------------------
@@ -962,6 +971,160 @@ button {
 }
 
 /* --------------------------------------------------------------------------
+   Section Subheading & New Components
+   -------------------------------------------------------------------------- */
+
+.section__subheading {
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 680px;
+  margin: -40px auto 64px auto;
+  text-align: center;
+}
+
+/* MVP Sprint */
+.mvp-sprint__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.mvp-sprint__card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-sm);
+  padding: 32px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mvp-sprint__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.mvp-sprint__week {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--peri);
+}
+
+.mvp-sprint__badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  background: var(--peri-10);
+  color: var(--black);
+}
+
+.mvp-sprint__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.mvp-sprint__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mvp-sprint__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.mvp-sprint__icon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.mvp-sprint__shape {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 100px;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Brand Showcase */
+.branding__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.branding__card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-sm);
+  padding: 36px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.branding__card:hover {
+  transform: translateY(-6px);
+  border-color: var(--peri);
+}
+
+.branding__icon {
+  font-size: 28px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.branding__title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.branding__description {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.branding__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.branding__pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--off);
+  color: var(--black);
+  border: 1px solid var(--card-border);
+}
+
+/* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
 
@@ -972,6 +1135,11 @@ button {
   }
 
   .stack__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mvp-sprint__grid,
+  .branding__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1018,6 +1186,11 @@ button {
 }
 
 @media (max-width: 820px) {
+  .mvp-sprint__grid,
+  .branding__grid {
+    grid-template-columns: 1fr;
+  }
+
   .services__layout {
     flex-direction: column;
   }
@@ -1067,6 +1240,10 @@ button {
     --section-y: 96px;
   }
 
+  .hero .shape {
+    display: none;
+  }
+
   .section__heading {
     font-size: 30px;
   }
@@ -1089,8 +1266,7 @@ button {
     font-size: 18px;
   }
 
-  .services__description,
-  .testimonials__quote {
+  .services__description {
     font-size: 18px;
   }
 

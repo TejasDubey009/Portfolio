@@ -2,7 +2,9 @@ import { useEffect } from 'react'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
-import Testimonials from './components/Testimonials'
+import Experience from './components/Experience'
+import MvpSprint from './components/MvpSprint'
+import BrandShowcase from './components/BrandShowcase'
 import Stack from './components/Stack'
 import Services from './components/Services'
 import Projects from './components/Projects'
@@ -14,14 +16,19 @@ export default function App() {
   useEffect(() => {
     const { hash } = window.location
     if (!hash) return
-    // Wait for images to settle, otherwise late layout shifts move the target.
-    const jump = () => document.querySelector(hash)?.scrollIntoView()
-    if (document.readyState === 'complete') {
-      jump()
-      return
+    const scrollToTarget = () => {
+      requestAnimationFrame(() => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' })
+      })
     }
-    window.addEventListener('load', jump, { once: true })
-    return () => window.removeEventListener('load', jump)
+    if (document.readyState === 'complete') {
+      scrollToTarget()
+      // Secondary check after layout settles
+      const timer = setTimeout(scrollToTarget, 300)
+      return () => clearTimeout(timer)
+    }
+    window.addEventListener('load', scrollToTarget, { once: true })
+    return () => window.removeEventListener('load', scrollToTarget)
   }, [])
 
   return (
@@ -30,7 +37,9 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Testimonials />
+        <Experience />
+        <MvpSprint />
+        <BrandShowcase />
         <Stack />
         <Services />
         <Projects />
