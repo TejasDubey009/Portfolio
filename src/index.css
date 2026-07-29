@@ -696,9 +696,15 @@ button {
   transform-style: preserve-3d;
 }
 
-.stack__card:hover .stack__inner,
 .stack__card.is-flipped .stack__inner {
   transform: rotateY(180deg);
+}
+
+@media (hover: hover) {
+  .stack__card:hover {
+    transform: translateY(-4px);
+    transition: transform 0.3s var(--ease);
+  }
 }
 
 .stack__face {

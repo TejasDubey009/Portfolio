@@ -3,26 +3,22 @@ import { motion } from 'framer-motion'
 import { images, stack } from '../data/site'
 import { logos } from '../data/logos'
 
-function StackCard({ card, index }) {
-  const [flipped, setFlipped] = useState(false)
-
-  const toggle = () => setFlipped((v) => !v)
-
+function StackCard({ card, index, isFlipped, onToggle }) {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
-      toggle()
+      onToggle()
     }
   }
 
   return (
     <motion.div
-      className={`stack__card${flipped ? ' is-flipped' : ''}`}
-      onClick={toggle}
+      className={`stack__card${isFlipped ? ' is-flipped' : ''}`}
+      onClick={onToggle}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="button"
-      aria-expanded={flipped}
+      aria-expanded={isFlipped}
       aria-label={`${card.name} tech stack card. Tap or press enter to toggle description.`}
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -54,6 +50,12 @@ function StackCard({ card, index }) {
 }
 
 export default function Stack() {
+  const [flippedIndex, setFlippedIndex] = useState(null)
+
+  const handleToggle = (index) => {
+    setFlippedIndex((prev) => (prev === index ? null : index))
+  }
+
   return (
     <section className="section stack">
       <span className="anchor" id="stack" />
@@ -69,7 +71,13 @@ export default function Stack() {
       <div className="page">
         <div className="stack__grid">
           {stack.cards.map((card, i) => (
-            <StackCard card={card} index={i} key={card.name} />
+            <StackCard
+              card={card}
+              index={i}
+              key={card.name}
+              isFlipped={flippedIndex === i}
+              onToggle={() => handleToggle(i)}
+            />
           ))}
         </div>
       </div>
