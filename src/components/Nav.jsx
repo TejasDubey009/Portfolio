@@ -23,7 +23,16 @@ export default function Nav() {
 
   useEffect(() => {
     const onScroll = () => {
-      const line = window.innerHeight * 0.35
+      const isAtBottom =
+        window.innerHeight + Math.ceil(window.scrollY) >=
+        document.documentElement.scrollHeight - 60
+
+      if (isAtBottom) {
+        setActive(sectionIds[sectionIds.length - 1])
+        return
+      }
+
+      const line = window.innerHeight * 0.45
       let current = sectionIds[0]
       for (const id of sectionIds) {
         const el = document.getElementById(id)
