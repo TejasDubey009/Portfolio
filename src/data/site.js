@@ -278,45 +278,197 @@ export const services = {
   ],
 }
 
+// Each project carries everything its live-preview modal needs: the sandbox
+// parameters (demoData), the stack breakdown, and the numbers that matter.
+// `slug` selects the interactive demo in src/components/demos/index.js.
+// Add `liveUrl` to any project and a "Visit live site" button appears in the modal.
 export const projects = {
   heading: 'Featured Projects',
   more: { label: 'View More Projects', href: '#projects' },
+  cardCta: 'Launch live preview',
   items: [
     {
-      category: 'AI & Vision',
-      title: 'AI Music Companion — Recommendation Engine',
-      href: '#projects',
-      image: `${cdn}/DzPnpdhCpUNilUZXTT2OZOvumWA.png?scale-down-to=2048`,
+      slug: 'helios-grid',
+      category: 'Autonomous Energy · Deep RL',
+      title: 'Helios Grid — Self-Balancing Renewable Microgrid',
+      tagline:
+        'Reinforcement-learning agents dispatching solar, wind and storage across a city district every 200 ms — cutting carbon without ever risking a brownout.',
+      year: '2026',
+      accent: '#f9a606',
+      features: [
+        'PPO dispatch agent trained on 4 years of half-hourly grid telemetry',
+        'Digital twin simulates 10k demand scenarios before every commit',
+        'Sub-15 ms decisions at the substation via quantised ONNX edge runtime',
+        'Human-override console with full decision-trace explainability',
+      ],
+      architecture: {
+        frontend: ['React 19', 'WebGL Flow Canvas', 'Tailwind v4', 'Zustand'],
+        backend: ['Go Microservices', 'Kafka', 'TimescaleDB', 'gRPC Streams'],
+        ai: ['PyTorch PPO', 'ONNX Runtime (edge)', 'Ray RLlib', 'Prophet Forecasting'],
+      },
+      metrics: [
+        { label: 'Decision latency', value: '14.2', unit: 'ms' },
+        { label: 'Grid uptime', value: '99.98', unit: '%' },
+        { label: 'Carbon reduction', value: '−38', unit: '%' },
+        { label: 'Peak load shaved', value: '2.4', unit: 'MW' },
+      ],
+      impact: [
+        { label: 'Autonomy vs. rule-based dispatch', score: 92 },
+        { label: 'Forecast accuracy (24h horizon)', score: 96 },
+        { label: 'Operating cost reduction', score: 74 },
+      ],
+      demoData: {
+        demand: 62,
+        irradiance: 70,
+        wind: 45,
+        autopilot: true,
+      },
     },
     {
-      category: 'WebGL & GIS',
-      title: 'Planetary Intelligence Platform — Earth Systems Visualizer',
-      href: '#projects',
-      image: `${cdn}/eZQ1X1Fpw11apl285CIeN8iEVI.png?scale-down-to=2048`,
+      slug: 'aperture-vision',
+      category: 'Spatial AI · Edge Vision',
+      title: 'Aperture — Real-Time Spatial Perception Engine',
+      tagline:
+        'Six warehouse camera streams, one GPU: detection, segmentation and metric depth fused into a live spatial map that routes autonomous forklifts.',
+      year: '2026',
+      accent: '#22d3ee',
+      features: [
+        'YOLOv11 backbone distilled and compiled to TensorRT INT8',
+        'Monocular metric depth fused with detections into a shared world model',
+        'Re-ID tracking holds identity through 4-second full occlusions',
+        'Safety envelope halts vehicles when a human enters the swept path',
+      ],
+      architecture: {
+        frontend: ['React 19', 'WebGL Overlay Renderer', 'WebCodecs', 'Canvas 2D HUD'],
+        backend: ['FastAPI (Python)', 'WebSockets', 'Redis Streams', 'NVIDIA Triton'],
+        ai: ['YOLOv11 TensorRT', 'Depth Anything V2', 'ByteTrack Re-ID', 'CUDA Kernels'],
+      },
+      metrics: [
+        { label: 'Inference latency', value: '8.7', unit: 'ms' },
+        { label: 'Pipeline throughput', value: '60', unit: 'FPS' },
+        { label: 'Detection mAP', value: '97.4', unit: '%' },
+        { label: 'Streams per GPU', value: '6', unit: '×' },
+      ],
+      impact: [
+        { label: 'Collision incidents prevented', score: 98 },
+        { label: 'Occlusion tracking recall', score: 89 },
+        { label: 'GPU cost per stream', score: 81 },
+      ],
+      demoData: {
+        confidence: 55,
+        segmentation: true,
+        depth: false,
+        tracking: true,
+      },
     },
     {
-      category: '3D & WebGL',
-      title: 'Interactive 3D Hardware Experience — Cinematic WebGL',
-      href: '#projects',
-      image: `${cdn}/pwnBF4uZrCSugu0a8ZiDdaD4A4.png?scale-down-to=2048`,
+      slug: 'loom-agents',
+      category: 'Multi-Agent AI · LLM Systems',
+      title: 'Loom — Multi-Agent Engineering Swarm',
+      tagline:
+        'A planner, researcher, synthesiser and validator that argue with each other until the work passes review — shipping specs in minutes at a third of the tokens.',
+      year: '2026',
+      accent: '#818cf8',
+      features: [
+        'LangGraph state machine with a validator that can force a retry loop',
+        'Shared RAG memory over a pgvector store keeps agents from re-reading',
+        'Speculative parallel drafting collapses planner and researcher latency',
+        'Every hop is traced: prompt, tokens, cost and verdict per node',
+      ],
+      architecture: {
+        frontend: ['React 19', 'Framer Motion Graph', 'SSE Streaming', 'Radix Primitives'],
+        backend: ['FastAPI', 'Async SQLAlchemy', 'pgvector', 'Temporal Workflows'],
+        ai: ['LangGraph', 'Claude Sonnet 4.5', 'GPT-4o Fallback', 'Structured Outputs'],
+      },
+      metrics: [
+        { label: 'Token efficiency', value: '+68', unit: '%' },
+        { label: 'Faster than single-agent', value: '4.1', unit: '×' },
+        { label: 'First-pass validation', value: '94', unit: '%' },
+        { label: 'Median run cost', value: '$0.21', unit: '' },
+      ],
+      impact: [
+        { label: 'Output accepted without human edits', score: 87 },
+        { label: 'Cost per completed task', score: 93 },
+        { label: 'Hallucination rate (validator-caught)', score: 95 },
+      ],
+      demoData: {
+        nodes: ['Planner', 'Researcher', 'Synthesizer', 'Validator'],
+        strictness: 60,
+        parallel: true,
+      },
     },
     {
-      category: 'EdTech & AI',
-      title: 'AI Learning Sandbox — Interactive Neural Net Simulations',
-      href: '#projects',
-      image: `${cdn}/UFfz36PjDofFGqSVyD7dxLp6G4M.png?scale-down-to=2048`,
+      slug: 'prism-materials',
+      category: 'Generative 3D · WebGPU',
+      title: 'Prism — Neural Material Studio',
+      tagline:
+        'Describe a material in plain language and watch a diffusion model synthesise 4K PBR maps, relit live in the browser at a locked 60 FPS.',
+      year: '2026',
+      accent: '#f472b6',
+      features: [
+        'Text-to-PBR diffusion emits albedo, roughness, metalness and normal maps',
+        'WebGPU compute pipeline relights the preview without a round trip',
+        'Material graph stays editable — generation is a starting point, not a black box',
+        'Exports straight to glTF, USDZ and Three.js material JSON',
+      ],
+      architecture: {
+        frontend: ['React 19', 'WebGPU / WGSL', 'Three.js r170', 'GSAP Motion'],
+        backend: ['Node.js Edge Functions', 'Cloudflare R2', 'Bun Workers', 'Redis Cache'],
+        ai: ['SDXL-Turbo LoRA', 'Material Diffusion', 'CLIP Re-ranking', 'ControlNet'],
+      },
+      metrics: [
+        { label: 'Render loop', value: '60', unit: 'FPS' },
+        { label: 'Material generation', value: '1.9', unit: 's' },
+        { label: 'Texture resolution', value: '4K', unit: '' },
+        { label: 'Lighthouse score', value: '100', unit: '/100' },
+      ],
+      impact: [
+        { label: 'Asset turnaround vs. manual authoring', score: 96 },
+        { label: 'Studio-grade output accepted', score: 84 },
+        { label: 'Bundle weight budget met', score: 90 },
+      ],
+      demoData: {
+        roughness: 32,
+        metalness: 78,
+        light: 135,
+        preset: 'Brushed Titanium',
+        presets: ['Brushed Titanium', 'Liquid Obsidian', 'Molten Copper', 'Frosted Jade'],
+      },
     },
     {
-      category: 'Design System',
-      title: 'Kudos — Modular UI Design System & Component Library',
-      href: '#projects',
-      image: `${cdn}/LAZePzksNGsqwC1vEotMzZH3EdE.png?scale-down-to=2048`,
-    },
-    {
-      category: 'Creative Portfolio',
-      title: 'Neozen — Immersive Portfolio & Adaptive Renderer',
-      href: '#projects',
-      image: `${cdn}/JeMGptNvDtMI6CES89lQ0yjQ40.png?scale-down-to=2048`,
+      slug: 'vitalis-twin',
+      category: 'Health AI · Digital Twin',
+      title: 'Vitalis — Predictive Biometric Digital Twin',
+      tagline:
+        'A living model of an athlete that ingests 128 Hz wearable telemetry and forecasts fatigue twelve hours before the body feels it.',
+      year: '2026',
+      accent: '#34d399',
+      features: [
+        'Temporal fusion transformer forecasts HRV, load and recovery windows',
+        'On-device inference keeps raw biometrics off the network entirely',
+        'Counterfactual planner answers "what if I train tonight instead?"',
+        'Clinician view surfaces the features driving every risk call',
+      ],
+      architecture: {
+        frontend: ['React 19', 'Canvas Telemetry Charts', 'Web Bluetooth', 'PWA Offline'],
+        backend: ['Go Ingest Service', 'TimescaleDB', 'Kafka', 'Differential Privacy Layer'],
+        ai: ['Temporal Fusion Transformer', 'Core ML / TFLite', 'SHAP Explainability', 'Federated Learning'],
+      },
+      metrics: [
+        { label: 'Forecast error (MAE)', value: '2.3', unit: '%' },
+        { label: 'Prediction horizon', value: '12', unit: 'h' },
+        { label: 'Telemetry ingest', value: '128', unit: 'Hz' },
+        { label: 'Round-trip latency', value: '<40', unit: 'ms' },
+      ],
+      impact: [
+        { label: 'Overtraining events avoided', score: 91 },
+        { label: 'Athlete adherence to plan', score: 78 },
+        { label: 'On-device privacy compliance', score: 100 },
+      ],
+      demoData: {
+        workload: 55,
+        forecast: true,
+      },
     },
   ],
 }
