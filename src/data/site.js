@@ -278,197 +278,133 @@ export const services = {
   ],
 }
 
-// Each project carries everything its live-preview modal needs: the sandbox
-// parameters (demoData), the stack breakdown, and the numbers that matter.
-// `slug` selects the interactive demo in src/components/demos/index.js.
-// Add `liveUrl` to any project and a "Visit live site" button appears in the modal.
+// Five concept sites, one per kind of business. Each is a real page in this
+// build — its entry is work/<slug>/index.html and its source src/sites/<slug>/ —
+// so `liveUrl` is a path inside the portfolio rather than an external link.
+// Card art lives in public/previews/<slug>-desktop.webp and -phone.webp.
 export const projects = {
   heading: 'Featured Projects',
-  more: { label: 'View More Projects', href: '#projects' },
-  cardCta: 'Launch live preview',
+  intro:
+    'Five concept sites for five kinds of business, each designed and built from an empty file. None of them is a mock-up: open one and book the table, reserve the room, plan the trip.',
+  cardCta: 'Preview live',
+  previewCta: 'Preview here',
+  visitCta: 'Open full site',
+  note: 'Concept work. The businesses are fictional, nothing you submit leaves your browser, and the photography is from Unsplash.',
   items: [
     {
-      slug: 'helios-grid',
-      category: 'Autonomous Energy · Deep RL',
-      title: 'Helios Grid — Self-Balancing Renewable Microgrid',
+      slug: 'marigold',
+      industry: 'Restaurant & café',
+      title: 'Marigold Canteen',
       tagline:
-        'Reinforcement-learning agents dispatching solar, wind and storage across a city district every 200 ms — cutting carbon without ever risking a brownout.',
+        'An all-day South Indian canteen with the volume up: a searchable menu, table reservations, and a pickup order that adds itself up.',
       year: '2026',
-      accent: '#f9a606',
-      features: [
-        'PPO dispatch agent trained on 4 years of half-hourly grid telemetry',
-        'Digital twin simulates 10k demand scenarios before every commit',
-        'Sub-15 ms decisions at the substation via quantised ONNX edge runtime',
-        'Human-override console with full decision-trace explainability',
+      accent: '#ff4100',
+      stage: '#ffc700',
+      liveUrl: 'work/marigold/',
+      tryThis: [
+        'Book a table: choose guests, a date and a time. Slots that are full are greyed out.',
+        'Filter the menu to vegan or gluten-free, or search it by name.',
+        'Add dishes to the tray and watch packing, GST and the total follow.',
+        'Build a filter coffee at the Kaapi bar and see the tumbler change.',
       ],
-      architecture: {
-        frontend: ['React 19', 'WebGL Flow Canvas', 'Tailwind v4', 'Zustand'],
-        backend: ['Go Microservices', 'Kafka', 'TimescaleDB', 'gRPC Streams'],
-        ai: ['PyTorch PPO', 'ONNX Runtime (edge)', 'Ray RLlib', 'Prophet Forecasting'],
+      design: {
+        idea: 'Poster-loud and completely flat. Condensed capitals over bands of orange, yellow and pink, plates cut into circles, blue used only for outlines, and not a single shadow.',
+        type: ['Anton', 'Archivo'],
+        palette: ['#ff4100', '#ffc700', '#fdbeba', '#1573dd', '#292a2c'],
       },
-      metrics: [
-        { label: 'Decision latency', value: '14.2', unit: 'ms' },
-        { label: 'Grid uptime', value: '99.98', unit: '%' },
-        { label: 'Carbon reduction', value: '−38', unit: '%' },
-        { label: 'Peak load shaved', value: '2.4', unit: 'MW' },
-      ],
-      impact: [
-        { label: 'Autonomy vs. rule-based dispatch', score: 92 },
-        { label: 'Forecast accuracy (24h horizon)', score: 96 },
-        { label: 'Operating cost reduction', score: 74 },
-      ],
-      demoData: {
-        demand: 62,
-        irradiance: 70,
-        wind: 45,
-        autopilot: true,
-      },
+      build: ['React 19', 'Framer Motion', 'Hand-written CSS', 'Variable fonts', 'Calendar (.ics) export', 'localStorage'],
     },
     {
-      slug: 'aperture-vision',
-      category: 'Spatial AI · Edge Vision',
-      title: 'Aperture — Real-Time Spatial Perception Engine',
+      slug: 'kurinji',
+      industry: 'Hotel & homestay',
+      title: 'Kurinji House',
       tagline:
-        'Six warehouse camera streams, one GPU: detection, segmentation and metric depth fused into a live spatial map that routes autonomous forklifts.',
+        'A five-room planter’s bungalow in the Nilgiris with a complete booking engine: nightly rates on the calendar, rooms, extras, and a booking you can look up again.',
       year: '2026',
-      accent: '#22d3ee',
-      features: [
-        'YOLOv11 backbone distilled and compiled to TensorRT INT8',
-        'Monocular metric depth fused with detections into a shared world model',
-        'Re-ID tracking holds identity through 4-second full occlusions',
-        'Safety envelope halts vehicles when a human enters the swept path',
+      accent: '#eac486',
+      stage: '#193741',
+      liveUrl: 'work/kurinji/',
+      tryThis: [
+        'Pick dates on the two-month calendar. Every night shows its own rate and sold-out nights cannot be crossed.',
+        'Choose a room, add a station transfer, and watch the total re-price with tax.',
+        'Finish the booking, then find it under “Manage a booking” in the footer and cancel it.',
+        'Open any room for its bed, view and floor area.',
       ],
-      architecture: {
-        frontend: ['React 19', 'WebGL Overlay Renderer', 'WebCodecs', 'Canvas 2D HUD'],
-        backend: ['FastAPI (Python)', 'WebSockets', 'Redis Streams', 'NVIDIA Triton'],
-        ai: ['YOLOv11 TensorRT', 'Depth Anything V2', 'ByteTrack Re-ID', 'CUDA Kernels'],
+      design: {
+        idea: 'Quiet and photographic. Deep teal and linen, a bookish serif for anything said aloud, and gold kept strictly for ornament so the one outlined button always reads as the action.',
+        type: ['Newsreader', 'Nunito Sans'],
+        palette: ['#193741', '#ebe7e1', '#eac486', '#ffffff'],
       },
-      metrics: [
-        { label: 'Inference latency', value: '8.7', unit: 'ms' },
-        { label: 'Pipeline throughput', value: '60', unit: 'FPS' },
-        { label: 'Detection mAP', value: '97.4', unit: '%' },
-        { label: 'Streams per GPU', value: '6', unit: '×' },
-      ],
-      impact: [
-        { label: 'Collision incidents prevented', score: 98 },
-        { label: 'Occlusion tracking recall', score: 89 },
-        { label: 'GPU cost per stream', score: 81 },
-      ],
-      demoData: {
-        confidence: 55,
-        segmentation: true,
-        depth: false,
-        tracking: true,
-      },
+      build: ['React 19', 'Framer Motion', 'Seasonal rate engine', 'Focus-trapped dialogs', 'Print stylesheet', 'localStorage'],
     },
     {
-      slug: 'loom-agents',
-      category: 'Multi-Agent AI · LLM Systems',
-      title: 'Loom — Multi-Agent Engineering Swarm',
+      slug: 'stillwater',
+      industry: 'Spa & boutique',
+      title: 'Stillwater',
       tagline:
-        'A planner, researcher, synthesiser and validator that argue with each other until the work passes review — shipping specs in minutes at a third of the tokens.',
+        'A bathhouse and apothecary on the Goa coast. Build a visit from treatments, choose a therapist and an hour, and shop the shelf.',
       year: '2026',
-      accent: '#818cf8',
-      features: [
-        'LangGraph state machine with a validator that can force a retry loop',
-        'Shared RAG memory over a pgvector store keeps agents from re-reading',
-        'Speculative parallel drafting collapses planner and researcher latency',
-        'Every hop is traced: prompt, tokens, cost and verdict per node',
+      accent: '#a3bfdb',
+      stage: '#d5e0ea',
+      liveUrl: 'work/stillwater/',
+      tryThis: [
+        'Add treatments to “Your visit”, then book them with a therapist, a day and a time.',
+        'Pick a day that is full and it offers the next free one.',
+        'Tilt the gift card with your pointer, then write a name and a note on it.',
+        'Fill the bag from the apothecary until delivery becomes free.',
       ],
-      architecture: {
-        frontend: ['React 19', 'Framer Motion Graph', 'SSE Streaming', 'Radix Primitives'],
-        backend: ['FastAPI', 'Async SQLAlchemy', 'pgvector', 'Temporal Workflows'],
-        ai: ['LangGraph', 'Claude Sonnet 4.5', 'GPT-4o Fallback', 'Structured Outputs'],
+      design: {
+        idea: 'White, mist and one pale blue. A light serif at display sizes, square surfaces against pill buttons, and products set out like specimens on a shelf.',
+        type: ['Cormorant Garamond', 'Figtree'],
+        palette: ['#ffffff', '#d5e0ea', '#a3bfdb', '#134fc2', '#231f20'],
       },
-      metrics: [
-        { label: 'Token efficiency', value: '+68', unit: '%' },
-        { label: 'Faster than single-agent', value: '4.1', unit: '×' },
-        { label: 'First-pass validation', value: '94', unit: '%' },
-        { label: 'Median run cost', value: '$0.21', unit: '' },
-      ],
-      impact: [
-        { label: 'Output accepted without human edits', score: 87 },
-        { label: 'Cost per completed task', score: 93 },
-        { label: 'Hallucination rate (validator-caught)', score: 95 },
-      ],
-      demoData: {
-        nodes: ['Planner', 'Researcher', 'Synthesizer', 'Validator'],
-        strictness: 60,
-        parallel: true,
-      },
+      build: ['React 19', 'Framer Motion', 'Pointer-driven 3D card', 'Slot availability', 'Cart with thresholds', 'localStorage'],
     },
     {
-      slug: 'prism-materials',
-      category: 'Generative 3D · WebGPU',
-      title: 'Prism — Neural Material Studio',
+      slug: 'ninefold',
+      industry: 'Art gallery',
+      title: 'Ninefold',
       tagline:
-        'Describe a material in plain language and watch a diffusion model synthesise 4K PBR maps, relit live in the browser at a locked 60 FPS.',
+        'A contemporary gallery in Fort Kochi. Walk the current show in a 3D viewing room hung to scale, then shortlist works and enquire.',
       year: '2026',
-      accent: '#f472b6',
-      features: [
-        'Text-to-PBR diffusion emits albedo, roughness, metalness and normal maps',
-        'WebGPU compute pipeline relights the preview without a round trip',
-        'Material graph stays editable — generation is a starting point, not a black box',
-        'Exports straight to glTF, USDZ and Three.js material JSON',
+      accent: '#ff7f41',
+      stage: '#16181d',
+      liveUrl: 'work/ninefold/',
+      tryThis: [
+        'Step into the viewing room: look around, walk closer, change the wall tone.',
+        'Filter and sort the works, then open one and zoom in.',
+        'Shortlist a few and send a single enquiry for all of them.',
+        'Reserve a seat at a talk in the programme.',
       ],
-      architecture: {
-        frontend: ['React 19', 'WebGPU / WGSL', 'Three.js r170', 'GSAP Motion'],
-        backend: ['Node.js Edge Functions', 'Cloudflare R2', 'Bun Workers', 'Redis Cache'],
-        ai: ['SDXL-Turbo LoRA', 'Material Diffusion', 'CLIP Re-ranking', 'ControlNet'],
+      design: {
+        idea: 'The site gets out of the way. Black on white, one typeface at one weight, hairline rules and square corners, with orange reserved for status. Every artwork is generated in code, so nothing here borrows a real artist’s work.',
+        type: ['IBM Plex Sans'],
+        palette: ['#ffffff', '#000000', '#ff7f41'],
       },
-      metrics: [
-        { label: 'Render loop', value: '60', unit: 'FPS' },
-        { label: 'Material generation', value: '1.9', unit: 's' },
-        { label: 'Texture resolution', value: '4K', unit: '' },
-        { label: 'Lighthouse score', value: '100', unit: '/100' },
-      ],
-      impact: [
-        { label: 'Asset turnaround vs. manual authoring', score: 96 },
-        { label: 'Studio-grade output accepted', score: 84 },
-        { label: 'Bundle weight budget met', score: 90 },
-      ],
-      demoData: {
-        roughness: 32,
-        metalness: 78,
-        light: 135,
-        preset: 'Brushed Titanium',
-        presets: ['Brushed Titanium', 'Liquid Obsidian', 'Molten Copper', 'Frosted Jade'],
-      },
+      build: ['React 19', 'CSS 3D transforms', 'Seeded generative SVG', 'Keyboard navigation', 'Framer Motion', 'localStorage'],
     },
     {
-      slug: 'vitalis-twin',
-      category: 'Health AI · Digital Twin',
-      title: 'Vitalis — Predictive Biometric Digital Twin',
+      slug: 'bonjour-pondy',
+      industry: 'Travel & trip planning',
+      title: 'Bonjour Pondy',
       tagline:
-        'A living model of an athlete that ingests 128 Hz wearable telemetry and forecasts fatigue twelve hours before the body feels it.',
+        'A trip planner for Pondicherry. Say how long you have and what you like, and it lays out each day by hour and distance on a map you can rearrange.',
       year: '2026',
-      accent: '#34d399',
-      features: [
-        'Temporal fusion transformer forecasts HRV, load and recovery windows',
-        'On-device inference keeps raw biometrics off the network entirely',
-        'Counterfactual planner answers "what if I train tonight instead?"',
-        'Clinician view surfaces the features driving every risk call',
+      accent: '#ffd400',
+      stage: '#0a66ff',
+      liveUrl: 'work/bonjour-pondy/',
+      tryThis: [
+        'Build a trip, then shuffle it or change the pace from easy to packed.',
+        'Move, swap or remove a stop. Arrival times and walking distances recalculate.',
+        'Switch the map to 3D and the pins stand up.',
+        'Check the month you are travelling in, and what the trip will cost.',
       ],
-      architecture: {
-        frontend: ['React 19', 'Canvas Telemetry Charts', 'Web Bluetooth', 'PWA Offline'],
-        backend: ['Go Ingest Service', 'TimescaleDB', 'Kafka', 'Differential Privacy Layer'],
-        ai: ['Temporal Fusion Transformer', 'Core ML / TFLite', 'SHAP Explainability', 'Federated Learning'],
+      design: {
+        idea: 'Sun yellow, sea blue and ink, with pink for the one thing you press. A town drawn in flat shapes along the curve of the horizon, and a map in the same hand.',
+        type: ['Changa One', 'Instrument Sans'],
+        palette: ['#ffd400', '#0a66ff', '#1d1d1b', '#e0106f', '#fff7d6'],
       },
-      metrics: [
-        { label: 'Forecast error (MAE)', value: '2.3', unit: '%' },
-        { label: 'Prediction horizon', value: '12', unit: 'h' },
-        { label: 'Telemetry ingest', value: '128', unit: 'Hz' },
-        { label: 'Round-trip latency', value: '<40', unit: 'ms' },
-      ],
-      impact: [
-        { label: 'Overtraining events avoided', score: 91 },
-        { label: 'Athlete adherence to plan', score: 78 },
-        { label: 'On-device privacy compliance', score: 100 },
-      ],
-      demoData: {
-        workload: 55,
-        forecast: true,
-      },
+      build: ['React 19', 'Itinerary engine', 'SVG map with a viewBox camera', 'CSS 3D tilt', 'Print stylesheet', 'localStorage'],
     },
   ],
 }
