@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { hero, images } from '../data/site'
 
-// Positions traced off the source hero: three shapes down each side, the
-// pyramid and cylinder carrying the same tilt the original uses.
+// Three shapes down each side, the pyramid and cylinder carrying the same tilt
+// the source hero uses. The top pair sits wide of the headline so the words
+// never run across them.
 const floaters = [
-  { key: 'orangePyramid', alt: 'Orange Pyramid', left: '30%', top: '22%', size: '25vw', rotate: 10, delay: 0 },
-  { key: 'purpleSphere', alt: 'Purple Sphere', left: '22%', top: '50%', size: '22vw', rotate: 0, delay: 0.6 },
-  { key: 'blueCylinder', alt: 'Blue Cylinder', left: '30%', top: '82%', size: '30vw', rotate: -55, delay: 1.2 },
-  { key: 'turquoiseStar', alt: 'Turquoise Star', left: '76%', top: '22%', size: '22vw', rotate: 0, delay: 0.9 },
-  { key: 'limeObject', alt: 'Lime Green Object', left: '82%', top: '50%', size: '22vw', rotate: 0, delay: 0.3 },
-  { key: 'yellowCube', alt: 'Yellow Cube', left: '76%', top: '82%', size: '22vw', rotate: 0, delay: 1.5 },
+  { key: 'orangePyramid', left: '13%', top: '21%', size: '25vw', rotate: 10, delay: 0 },
+  { key: 'purpleSphere', left: '22%', top: '52%', size: '22vw', rotate: 0, delay: 0.6 },
+  { key: 'blueCylinder', left: '30%', top: '84%', size: '30vw', rotate: -55, delay: 1.2 },
+  { key: 'turquoiseStar', left: '87%', top: '21%', size: '22vw', rotate: 0, delay: 0.9 },
+  { key: 'limeObject', left: '80%', top: '52%', size: '22vw', rotate: 0, delay: 0.3 },
+  { key: 'yellowCube', left: '74%', top: '84%', size: '22vw', rotate: 0, delay: 1.5 },
 ]
 
 export default function Hero() {
@@ -43,7 +44,8 @@ export default function Hero() {
           key={shape.key}
           className="shape"
           src={images.shapes[shape.key]}
-          alt={shape.alt}
+          alt=""
+          aria-hidden="true"
           loading="eager"
           style={{
             left: shape.left,
@@ -94,13 +96,13 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
         >
-          <img src={images.profile} alt="Profile Picture" />
+          <img src={images.profile} alt="Tejaswi Dubey" />
         </motion.div>
 
         <div className="hero__clients">
           <div className="hero__avatars">
-            {images.clients.map((src, i) => (
-              <img key={src} src={src} alt={`Person ${i + 1}`} />
+            {images.clients.map((src) => (
+              <img key={src} src={src} alt="" />
             ))}
           </div>
           <p>{hero.clients}</p>

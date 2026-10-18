@@ -3,83 +3,69 @@ import { motion } from 'framer-motion'
 import { images, stack } from '../data/site'
 import { logos } from '../data/logos'
 
+// A tile turns over on hover or keyboard focus; a tap or click pins it, which
+// is what touch screens rely on. Both faces stay in the document, so a screen
+// reader hears the name and the description either way.
 function StackCard({ card, index, isFlipped, onToggle }) {
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      onToggle()
-    }
-  }
-
   return (
-    <motion.div
-      className={`stack__card${isFlipped ? ' is-flipped' : ''}`}
-      onClick={onToggle}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-      role="button"
-      aria-expanded={isFlipped}
-      aria-label={`${card.name} tech stack card. Tap or press enter to toggle description.`}
-      initial={{ opacity: 0, y: 32 }}
+    <motion.li
+      className="stack__item"
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, delay: (index % 3) * 0.08 }}
+      transition={{ duration: 0.45, delay: (index % 6) * 0.05 }}
     >
-      <div className="stack__inner">
-        <div className="stack__face">
-          <div className="stack__panel">
+      <button
+        type="button"
+        className={`stack__card${isFlipped ? ' is-flipped' : ''}`}
+        aria-pressed={isFlipped}
+        onClick={onToggle}
+      >
+        <span className="stack__inner">
+          <span className="stack__face">
             <span
               className="stack__logo"
+              aria-hidden="true"
               dangerouslySetInnerHTML={{
                 __html: `<svg viewBox="0 0 48 48" fill="none">${logos[card.logo]}</svg>`,
               }}
             />
-            <h3 className="stack__name">{card.name}</h3>
-            <span className="stack__hint">{stack.flipHint}</span>
-          </div>
-        </div>
+            <span className="stack__name">{card.name}</span>
+          </span>
 
-        <div className="stack__face stack__face--back">
-          <div className="stack__panel stack__panel--text">
-            <p className="stack__description">{card.description}</p>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+          <span className="stack__face stack__face--back">
+            <span className="stack__description">{card.description}</span>
+          </span>
+        </span>
+      </button>
+    </motion.li>
   )
 }
 
 export default function Stack() {
   const [flippedIndex, setFlippedIndex] = useState(null)
 
-  const handleToggle = (index) => {
-    setFlippedIndex((prev) => (prev === index ? null : index))
-  }
-
   return (
     <section className="section stack">
       <span className="anchor" id="stack" />
+      <img className="shape stack__cube" src={images.shapes.turquoiseCube} alt="" loading="lazy" />
+
       <h2 className="section__heading">{stack.heading}</h2>
 
-      <img
-        className="shape stack__cube"
-        src={images.shapes.turquoiseCube}
-        alt="Turquoise Cube"
-        loading="lazy"
-      />
-
       <div className="page">
-        <div className="stack__grid">
+        <p className="section__subheading">{stack.hint}</p>
+
+        <ul className="stack__grid">
           {stack.cards.map((card, i) => (
             <StackCard
               card={card}
               index={i}
               key={card.name}
               isFlipped={flippedIndex === i}
-              onToggle={() => handleToggle(i)}
+              onToggle={() => setFlippedIndex((prev) => (prev === i ? null : i))}
             />
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )

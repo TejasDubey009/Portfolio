@@ -2,11 +2,9 @@ import { useEffect } from 'react'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
-import Experience from './components/Experience'
-import MvpSprint from './components/MvpSprint'
-import BrandShowcase from './components/BrandShowcase'
+import Offers from './components/Offers'
+import Expertise from './components/Expertise'
 import Stack from './components/Stack'
-import Services from './components/Services'
 import Projects from './components/Projects'
 import Footer from './components/Footer'
 
@@ -37,11 +35,9 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Experience />
-        <MvpSprint />
-        <BrandShowcase />
+        <Offers />
+        <Expertise />
         <Stack />
-        <Services />
         <Projects />
       </main>
       <Footer />

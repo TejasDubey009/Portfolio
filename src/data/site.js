@@ -37,9 +37,8 @@ export const nav = {
   links: [
     { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'MVP Sprint', href: '#mvp-sprint' },
-    { label: 'Brand Systems', href: '#branding' },
+    { label: 'Services', href: '#services' },
+    { label: 'Expertise', href: '#expertise' },
     { label: 'Stack', href: '#stack' },
     { label: 'Projects', href: '#projects' },
     { label: 'Contact', href: '#contact' },
@@ -65,7 +64,6 @@ export const hero = {
 
 export const about = {
   heading: 'About Me',
-  cvLink: { label: 'Read My CV', href: '/resume.pdf' },
   paragraphs: [
     "I don't just build websites — I build brands and launch production MVPs people remember. My work sits at the intersection of Brand Strategy, Software Engineering, and Artificial Intelligence.",
     'As a trusted partner for founders and enterprises, I transform ambitious ideas into market-ready digital products in weeks, not months. Every interface is designed to captivate users while maintaining lightning-fast performance.',
@@ -77,11 +75,11 @@ export const experience = {
   heading: 'Experience',
   items: [
     {
-      role: 'Junior Developer',
-      company: 'icodejr Academy',
+      role: 'AI Engineer',
+      company: 'iCodeJR',
       period: '2024 - Present',
       description:
-        'Employed as a Junior Developer, building interactive web applications, digital learning tools, engaging frontend interfaces, and scalable component systems.',
+        'Employed as an AI Engineer, building AI-native digital experiences, LLM-powered learning tools, interactive web applications, and scalable component systems.',
       shape: 'yellowCube',
     },
   ],
@@ -160,7 +158,7 @@ export const brandBuilding = {
 
 export const stack = {
   heading: 'Tech Stack',
-  flipHint: 'Tap to flip',
+  hint: 'Hover or tap a card to see how I use it.',
   cards: [
     {
       name: 'React & Next.js',
@@ -237,7 +235,7 @@ export const stack = {
   ],
 }
 
-export const services = {
+export const expertise = {
   heading: 'Expertise',
   items: [
     {
@@ -410,14 +408,22 @@ export const projects = {
 }
 
 export const footer = {
+  // The contact block that opens the footer; the hero's button lands here.
+  contact: {
+    heading: "Let's Build Something Extraordinary",
+    links: [
+      { label: 'Book a Call', href: 'https://calendly.com/mailmeontejaswi/30min' },
+      { label: 'mailmeontejaswi@gmail.com', href: 'mailto:mailmeontejaswi@gmail.com' },
+    ],
+  },
   columns: [
     {
       heading: 'Capabilities',
       links: [
         { label: 'Rapid MVP Sprint', href: '#mvp-sprint' },
         { label: 'Brand Building', href: '#branding' },
-        { label: 'AI Engineering', href: '#services' },
-        { label: 'Creative 3D Dev', href: '#services' },
+        { label: 'AI Engineering', href: '#expertise' },
+        { label: 'Creative 3D Dev', href: '#expertise' },
       ],
     },
     {
@@ -434,13 +440,6 @@ export const footer = {
       links: [
         { label: 'X (Twitter)', href: 'https://x.com/TejaswiDubey01' },
         { label: 'LinkedIn', href: 'https://www.linkedin.com/in/tejaswi-dubey-b4a992227/' },
-      ],
-    },
-    {
-      heading: 'Contact',
-      links: [
-        { label: 'Book a Call', href: 'https://calendly.com/mailmeontejaswi/30min' },
-        { label: 'mailmeontejaswi@gmail.com', href: 'mailto:mailmeontejaswi@gmail.com' },
       ],
     },
   ],
