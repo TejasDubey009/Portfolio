@@ -98,20 +98,114 @@ export const Sphere = () => (
   </g>
 )
 
-export const Palm = ({ h = 120 }) => (
-  <g>
-    <path d={`M-3 0 Q6 ${-h / 2} 0 ${-h}`} fill="none" stroke={ink} strokeWidth="6" strokeLinecap="round" />
-    {[-150, -115, -65, -30, 205, 240].map((a) => (
+export const Palm = ({ h = 120, lean = 8 }) => {
+  const topY = -h
+  const midX = lean * 0.65
+  const topX = lean
+  return (
+    <g>
+      {/* Tapered curving trunk */}
       <path
-        key={a}
-        d="M0 0 Q26 -16 52 4"
-        fill="none"
-        stroke={leaf}
-        strokeWidth="9"
-        strokeLinecap="round"
-        transform={`translate(0 ${-h}) rotate(${a})`}
+        d={`M -4 0 Q ${midX - 2.5} ${topY * 0.5} ${topX - 2.2} ${topY} L ${topX + 2.2} ${topY} Q ${midX + 3.5} ${topY * 0.5} 4 0 Z`}
+        fill="#3d2c1e"
       />
-    ))}
+      {/* Trunk rings */}
+      {[0.2, 0.4, 0.6, 0.8].map((pct, i) => {
+        const y = topY * pct
+        const x = midX * pct
+        return (
+          <ellipse key={i} cx={x} cy={y} rx={3.5 - pct * 1} ry={1.2} fill="#271c13" />
+        )
+      })}
+      {/* Coconuts at crown */}
+      <circle cx={topX - 3.5} cy={topY + 3.5} r="3.5" fill="#2b1f15" />
+      <circle cx={topX + 2.5} cy={topY + 4} r="3.5" fill="#3a2a1d" />
+      <circle cx={topX} cy={topY + 2} r="3" fill="#523c2a" />
+
+      {/* Layered cascading palm fronds */}
+      <g transform={`translate(${topX} ${topY})`}>
+        {/* Back fronds (deeper forest green) */}
+        {[
+          { angle: -145, len: 46, bend: -18, col: '#0d5430' },
+          { angle: -35, len: 46, bend: 18, col: '#0d5430' },
+          { angle: -90, len: 50, bend: 0, col: '#12683c' },
+        ].map((f, idx) => (
+          <g key={`b-${idx}`} transform={`rotate(${f.angle})`}>
+            <path
+              d={`M 0 0 Q ${f.bend * 0.6} ${-f.len * 0.5} ${f.bend} ${-f.len}`}
+              fill="none"
+              stroke={f.col}
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+            {[-12, -22, -32, -42].map((dist, k) => (
+              <path
+                key={k}
+                d={`M ${f.bend * (dist / -f.len)} ${dist} L ${f.bend * (dist / -f.len) - 8} ${dist + 6} M ${f.bend * (dist / -f.len)} ${dist} L ${f.bend * (dist / -f.len) + 8} ${dist + 6}`}
+                stroke={f.col}
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              />
+            ))}
+          </g>
+        ))}
+
+        {/* Front fronds (vibrant sunlit emerald green) */}
+        {[
+          { angle: -170, len: 52, bend: -24, col: '#169956' },
+          { angle: -115, len: 48, bend: -13, col: '#1db56c' },
+          { angle: -65, len: 48, bend: 13, col: '#1db56c' },
+          { angle: -10, len: 52, bend: 24, col: '#169956' },
+        ].map((f, idx) => (
+          <g key={`f-${idx}`} transform={`rotate(${f.angle})`}>
+            <path
+              d={`M 0 0 Q ${f.bend * 0.6} ${-f.len * 0.5} ${f.bend} ${-f.len}`}
+              fill="none"
+              stroke={f.col}
+              strokeWidth="6"
+              strokeLinecap="round"
+            />
+            {[-12, -22, -32, -42].map((dist, k) => (
+              <path
+                key={k}
+                d={`M ${f.bend * (dist / -f.len)} ${dist} L ${f.bend * (dist / -f.len) - 10} ${dist + 7} M ${f.bend * (dist / -f.len)} ${dist} L ${f.bend * (dist / -f.len) + 10} ${dist + 7}`}
+                stroke={f.col}
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            ))}
+          </g>
+        ))}
+        <circle cx="0" cy="0" r="3" fill="#24d17c" />
+      </g>
+    </g>
+  )
+}
+
+export const RainTree = ({ h = 100 }) => (
+  <g>
+    {/* Trunk and branches */}
+    <path
+      d={`M -5 0 Q -3 ${-h * 0.4} 0 ${-h * 0.65} Q 3 ${-h * 0.4} 5 0 Z`}
+      fill="#38291d"
+    />
+    <path
+      d={`M 0 ${-h * 0.65} Q -12 ${-h * 0.8} -22 ${-h * 0.9} M 0 ${-h * 0.65} Q 12 ${-h * 0.8} 22 ${-h * 0.9}`}
+      fill="none"
+      stroke="#38291d"
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+    {/* Layered canopy clouds */}
+    <ellipse cx="-20" cy={-h * 0.92} rx="26" ry="18" fill="#0d5430" />
+    <ellipse cx="20" cy={-h * 0.92} rx="26" ry="18" fill="#12683c" />
+    <ellipse cx="0" cy={-h * 1.02} rx="34" ry="22" fill="#17854f" />
+    <ellipse cx="-8" cy={-h * 1.08} rx="22" ry="14" fill="#24c979" />
+    {/* Bougainvillea flower blooms */}
+    <circle cx="-16" cy={-h * 0.96} r="3.5" fill="#ff4081" />
+    <circle cx="14" cy={-h * 0.9} r="3" fill="#ff4081" />
+    <circle cx="2" cy={-h * 1.1} r="3.5" fill="#ff4081" />
+    <circle cx="-3" cy={-h * 1.02} r="2.5" fill="#ffd54f" />
   </g>
 )
 
@@ -140,19 +234,19 @@ export const Boat = () => (
 
 // angle in degrees along the horizon; 0 is the centre of the page.
 const scene = [
-  { a: -20.5, el: <Palm h={130} /> },
+  { a: -20.5, el: <Palm h={130} lean={-10} /> },
   { a: -17.4, el: <Villa wall={white} trim={cream} door={terracotta} />, s: 0.92 },
   { a: -13.1, el: <Lighthouse /> },
-  { a: -10.9, el: <Palm h={96} /> },
+  { a: -10.9, el: <RainTree h={96} /> },
   { a: -7.6, el: <Villa /> },
   { a: -3.2, el: <Shopfront /> },
   { a: 0.6, el: <Church />, s: 1.04 },
-  { a: 4.4, el: <Palm h={112} /> },
+  { a: 4.4, el: <Palm h={116} lean={6} /> },
   { a: 7.2, el: <Pavilion /> },
   { a: 10.9, el: <Villa wall={pink} trim={white} door={ink} />, s: 0.94 },
-  { a: 14.6, el: <Palm h={124} /> },
+  { a: 14.6, el: <RainTree h={112} /> },
   { a: 17.8, el: <Sphere />, s: 0.9 },
-  { a: 21.2, el: <Palm h={92} /> },
+  { a: 21.2, el: <Palm h={100} lean={-8} /> },
 ]
 
 export default function Skyline({ className }) {

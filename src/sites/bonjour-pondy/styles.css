@@ -899,10 +899,21 @@ a {
   fill: var(--blue);
 }
 
-.map__river,
+.map__marsh {
+  fill: #8ebfa1;
+  opacity: 0.65;
+}
+
+.map__river {
+  fill: none;
+  stroke: #48a6b8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .map__canal {
   fill: none;
-  stroke: var(--blue);
+  stroke: #337d95;
   stroke-linecap: round;
 }
 
@@ -915,7 +926,17 @@ a {
 
 .map__ring {
   fill: none;
-  stroke: rgba(29, 29, 27, 0.3);
+  stroke: rgba(29, 29, 27, 0.28);
+}
+
+.map__auroville-forest {
+  fill: #48865c;
+  opacity: 0.45;
+}
+
+.map__auroville-inner {
+  fill: #346c46;
+  opacity: 0.55;
 }
 
 .map__gold {
@@ -926,6 +947,14 @@ a {
   fill: #2fa866;
 }
 
+.map__botanical {
+  fill: #2d8f58;
+}
+
+.map__seawall {
+  stroke-linecap: round;
+}
+
 .map__pier {
   stroke: var(--white);
   stroke-linecap: round;
@@ -933,20 +962,23 @@ a {
 
 .map__town {
   fill: var(--yellow);
+  stroke: #c2b399;
+  stroke-width: 1.5px;
 }
 
 .map__street {
-  stroke: var(--sand);
+  stroke: rgba(240, 226, 206, 0.85);
 }
 
 .map__label {
   font-family: var(--ui);
   font-weight: 600;
-  fill: rgba(29, 29, 27, 0.74);
+  fill: rgba(29, 29, 27, 0.78);
+  user-select: none;
 }
 
 .map__label--sea {
-  fill: rgba(255, 255, 255, 0.72);
+  fill: rgba(255, 255, 255, 0.78);
   font-weight: 700;
   letter-spacing: 0.32em;
 }
@@ -956,6 +988,46 @@ a {
   stroke: var(--ink);
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.map__billboards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.map__billboard {
+  position: absolute;
+  transform-origin: 50% 100%;
+  transition:
+    transform 520ms var(--ease),
+    filter 520ms var(--ease);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.map.is-tilted .map__billboard {
+  transform: rotateX(-52deg);
+  filter: drop-shadow(0 6px 8px rgba(22, 22, 20, 0.24));
+}
+
+.map__billboard-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(29, 29, 27, 0.18);
+  filter: blur(1.5px);
+  transition:
+    transform 520ms var(--ease),
+    background 520ms var(--ease);
+}
+
+.map.is-tilted .map__billboard-shadow {
+  transform: translateX(-50%) scaleY(1.4) translateY(3px);
+  background: rgba(29, 29, 27, 0.28);
 }
 
 .map__dot {
