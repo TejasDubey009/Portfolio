@@ -4,6 +4,8 @@
 const CDN = 'https://images.unsplash.com/photo-'
 
 function photoUrl(id, { w = 1200, h, q = 72, crop } = {}) {
+  if (!id) return ''
+  if (id.startsWith('/') || id.startsWith('http')) return id
   const params = new URLSearchParams({ auto: 'format', fit: 'crop', w: String(w), q: String(q) })
   if (h) params.set('h', String(h))
   if (crop) params.set('crop', crop)
@@ -29,13 +31,14 @@ export function Photo({
 }) {
   const height = (w) => (ratio ? Math.round(w / ratio) : undefined)
   const largest = widths[widths.length - 1]
+  const isDirect = id?.startsWith('/') || id?.startsWith('http')
 
   return (
     <img
       className={className}
       style={style}
       src={photoUrl(id, { w: largest, h: height(largest), crop })}
-      srcSet={widths.map((w) => `${photoUrl(id, { w, h: height(w), crop })} ${w}w`).join(', ')}
+      srcSet={!isDirect ? widths.map((w) => `${photoUrl(id, { w, h: height(w), crop })} ${w}w`).join(', ') : undefined}
       sizes={sizes}
       width={largest}
       height={height(largest) ?? Math.round(largest * 0.66)}
