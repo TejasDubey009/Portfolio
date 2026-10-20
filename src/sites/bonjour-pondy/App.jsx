@@ -33,7 +33,6 @@ import {
 } from './planner'
 import TripMap from './Map'
 import { onMap } from './geo'
-import Skyline from './Skyline'
 import Tile from './Tile'
 
 const defaultPrefs = {
@@ -177,6 +176,51 @@ const legText = (leg) => {
 
 const monthName = (index) => new Date(2024, index, 1).toLocaleString('en', { month: 'long' })
 
+const categoryIcons = {
+  heritage: (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 21h18M4 18h16M4 10h16M12 3l9 5H3l9-5zM6 10v8M10 10v8M14 10v8M18 10v8" />
+    </svg>
+  ),
+  beach: (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M2 11c2.5-2 5-2 7.5 0s5 2 7.5 0 5-2 7 0" />
+      <path d="M2 16c2.5-2 5-2 7.5 0s5 2 7.5 0 5-2 7 0" />
+    </svg>
+  ),
+  food: (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+      <line x1="6" y1="1" x2="6" y2="4" />
+      <line x1="10" y1="1" x2="10" y2="4" />
+      <line x1="14" y1="1" x2="14" y2="4" />
+    </svg>
+  ),
+  spirit: (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 4c1.5 3 2.5 6 0 10-2.5-4-1.5-7 0-10z" />
+      <path d="M12 14c-3-2-6-1.5-8 1 2 2.5 5 2.5 8-1z" />
+      <path d="M12 14c3-2 6-1.5 8 1-2 2.5-5 2.5-8-1z" />
+      <path d="M12 14c-4-4-7-3-9-1 1 3.5 5 4 9 1z" />
+      <path d="M12 14c4-4 7-3 9-1-1 3.5-5 4-9 1z" />
+    </svg>
+  ),
+  nature: (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
+      <path d="M2 21c0-3 1.85-5.36 5.08-6" />
+    </svg>
+  ),
+  shop: (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  ),
+}
+
 /* -------------------------------------------------------------------- Hero */
 
 function Hero({ prefs, onBuild }) {
@@ -191,7 +235,10 @@ function Hero({ prefs, onBuild }) {
   return (
     <header className="hero" id="top">
       <div className="wrap hero__in">
-        <h1 className="hero__title">Pondy, planned in one minute.</h1>
+        <h1 className="hero__title">
+          <span>Pondy, planned</span>
+          <span>in one minute.</span>
+        </h1>
         <p className="hero__lede">
           Tell us how long you have and what you like. We will lay out the French Quarter, Auroville
           and the beaches into days that actually fit — on a map you can rearrange.
@@ -207,11 +254,21 @@ function Hero({ prefs, onBuild }) {
           <fieldset className="quick__days">
             <legend>How many days?</legend>
             <div className="stepper">
-              <button type="button" onClick={() => setDraft((d) => ({ ...d, days: Math.max(1, d.days - 1) }))} disabled={draft.days <= 1} aria-label="Fewer days">
+              <button
+                type="button"
+                onClick={() => setDraft((d) => ({ ...d, days: Math.max(1, d.days - 1) }))}
+                disabled={draft.days <= 1}
+                aria-label="Fewer days"
+              >
                 −
               </button>
               <output aria-live="polite">{draft.days}</output>
-              <button type="button" onClick={() => setDraft((d) => ({ ...d, days: Math.min(5, d.days + 1) }))} disabled={draft.days >= 5} aria-label="More days">
+              <button
+                type="button"
+                onClick={() => setDraft((d) => ({ ...d, days: Math.min(5, d.days + 1) }))}
+                disabled={draft.days >= 5}
+                aria-label="More days"
+              >
                 +
               </button>
             </div>
@@ -219,39 +276,49 @@ function Hero({ prefs, onBuild }) {
 
           <label className="quick__month">
             <span>Which month?</span>
-            <select value={draft.month} onChange={(e) => setDraft((d) => ({ ...d, month: Number(e.target.value) }))}>
-              {months.map((label, i) => (
-                <option key={label} value={i}>
-                  {monthName(i)}
-                </option>
-              ))}
-            </select>
+            <div className="quick__select-box">
+              <select
+                value={draft.month}
+                onChange={(e) => setDraft((d) => ({ ...d, month: Number(e.target.value) }))}
+              >
+                {months.map((label, i) => (
+                  <option key={label} value={i}>
+                    {monthName(i)}
+                  </option>
+                ))}
+              </select>
+            </div>
           </label>
 
           <fieldset className="quick__likes">
             <legend>What are you here for?</legend>
-            <div className="chips">
-              {interests.map((item) => (
-                <button
-                  type="button"
-                  key={item.id}
-                  className={`chip${draft.interests.includes(item.id) ? ' is-on' : ''}`}
-                  aria-pressed={draft.interests.includes(item.id)}
-                  onClick={() => toggle(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
+            <div className="chips chips--grid">
+              {interests.map((item) => {
+                const on = draft.interests.includes(item.id)
+                return (
+                  <button
+                    type="button"
+                    key={item.id}
+                    className={`chip${on ? ' is-on' : ''}`}
+                    aria-pressed={on}
+                    onClick={() => toggle(item.id)}
+                  >
+                    <span className="chip__icon">{categoryIcons[item.id]}</span>
+                    <span className="chip__label">{item.label}</span>
+                  </button>
+                )
+              })}
             </div>
           </fieldset>
 
-          <button type="submit" className="btn btn--go">
-            Build my trip
+          <button type="submit" className="btn btn--go btn--hero-go">
+            <span>Build my trip</span>
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
           </button>
         </form>
       </div>
-
-      <Skyline className="hero__skyline" />
     </header>
   )
 }
